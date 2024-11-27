@@ -1,0 +1,16 @@
+<h1>Videoflix</h1>
+
+<div *ngIf="verificationStatus === 'loading'">
+    <p>Bitte warten, der Account wird verifiziert!</p>
+</div>
+
+<div *ngIf="verificationStatus === 'success'">
+    <h2>Account erfolgreich bestätigt!</h2>
+    <p>Sie werden gleich weitergeleitet...</p>
+</div>
+
+<div *ngIf="verificationStatus === 'error'">
+    <h2>Verifizierung fehlgeschlagen!</h2>
+    <p>{{ errorMessage }}</p>
+    <a routerLink="/">Zurück zur Startseite</a>
+</div>
