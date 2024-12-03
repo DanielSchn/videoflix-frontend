@@ -8,5 +8,5 @@ export const routes: Routes = [
     { path: 'verify-email', component: EmailVerificationComponent },
     { path: 'forgot-password', component: ForgotPasswordComponent },
     { path: 'login', component: LoginComponent },
-    { path: 'reset-password', component: PasswordResetComponent },
+    { path: 'password-reset', component: PasswordResetComponent },
 ];

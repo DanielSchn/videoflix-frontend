@@ -3,6 +3,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { ConstantsService } from '../constants.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -21,10 +22,10 @@ export class ForgotPasswordComponent {
   message: string = '';
   error: string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private constants: ConstantsService) {}
 
   submitRequest() {
-    this.http.post('http://127.0.0.1:8000/api/password-reset/', { email: this.email }).subscribe({
+    this.http.post(this.constants.API_BASE_URL + 'api/password-reset/', { email: this.email }).subscribe({
       next: (response: any) => {
         this.message = response.message;
         this.error = '';

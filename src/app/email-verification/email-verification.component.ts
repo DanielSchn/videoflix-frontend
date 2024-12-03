@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ConstantsService } from '../constants.service';
 
 @Component({
   selector: 'app-email-verification',
@@ -18,7 +19,7 @@ export class EmailVerificationComponent {
   verificationStatus: 'loading' | 'success' | 'error' = 'loading';
   errorMessage: string = '';
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private constants: ConstantsService) {}
 
   ngOnInit(): void {
     const uid = this.route.snapshot.queryParamMap.get('uid');
@@ -26,7 +27,7 @@ export class EmailVerificationComponent {
 
     if (uid && token) {
       this.http
-        .post('http://127.0.0.1:8000/api/verify-email/', { uid, token })
+        .post(this.constants.API_BASE_URL + 'api/verify-email/', { uid, token })
         .subscribe({
           next: (response: any) => {
             this.verificationStatus = 'success';
