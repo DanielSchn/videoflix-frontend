@@ -3,6 +3,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ConstantsService } from '../constants.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-email-verification',
@@ -18,8 +19,15 @@ import { ConstantsService } from '../constants.service';
 export class EmailVerificationComponent {
   verificationStatus: 'loading' | 'success' | 'error' = 'loading';
   errorMessage: string = '';
-
-  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private constants: ConstantsService) {}
+  message: string = '';
+  
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private router: Router,
+    private constants: ConstantsService,
+    private toastr: ToastrService,
+  ) {}
 
   ngOnInit(): void {
     const uid = this.route.snapshot.queryParamMap.get('uid');
@@ -31,18 +39,33 @@ export class EmailVerificationComponent {
         .subscribe({
           next: (response: any) => {
             this.verificationStatus = 'success';
-            setTimeout(() => {
-              //this.router.navigate(['/']);
-            }, 3000);
+            this.errorMessage = '';
+            this.message = response.message;
+            this.toastr.success(this.message, 'Success', {
+              positionClass: this.constants.TOASTR_POSITION,
+              timeOut: this.constants.TOASTR_TIMEOUT
+            });
           },
           error: (error) => {
             this.verificationStatus = 'error';
-            this.errorMessage = error.error?.error || 'Fehler bei der Verifizierung!';
+            this.message = '';
+            this.errorMessage = error.error?.error || 'Verification error!';
+            this.toastr.error(this.errorMessage, 'Error', {
+              positionClass: this.constants.TOASTR_POSITION,
+              timeOut: this.constants.TOASTR_TIMEOUT
+            });
           }
         });
     } else {
       this.verificationStatus = 'error';
-      this.errorMessage = 'Ungültiger Link.';
+      this.errorMessage = 'Invalid link.';
+      this.toastr.error(this.errorMessage, 'Error', {
+        positionClass: this.constants.TOASTR_POSITION,
+        timeOut: this.constants.TOASTR_TIMEOUT
+      });
     }
+    setTimeout(() => {
+      // this.router.navigate(['/']);
+    }, 3500);
   }
 }

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ConstantsService } from '../constants.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -37,7 +37,8 @@ export class PasswordResetComponent {
     private route: ActivatedRoute,
     private http: HttpClient,
     private constants: ConstantsService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ){}
 
   ngOnInit() {
@@ -86,12 +87,15 @@ export class PasswordResetComponent {
         },
       });
     } else {
-      this.error = 'Unknown link.';
+      this.error = 'Invalid link.';
       this.toastr.error(this.error, 'Error', {
         positionClass: this.constants.TOASTR_POSITION,
         timeOut: this.constants.TOASTR_TIMEOUT
       });
     }
+    setTimeout(() => {
+      this.router.navigate(['/']);
+    }, 3500);
   }
 
 }
