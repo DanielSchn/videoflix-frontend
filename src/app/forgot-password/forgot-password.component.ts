@@ -30,7 +30,7 @@ export class ForgotPasswordComponent {
         this.error = '';
       },
       error: (error) => {
-        this.error = error.error?.error || 'Fehler bei der Anfrage.';
+        this.error = error.error?.error || 'Error in request.';
         this.message = '';
       },
     });
