@@ -4,6 +4,9 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ConstantsService } from '../constants.service';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @Component({
   selector: 'app-password-reset',
@@ -12,10 +15,11 @@ import { ConstantsService } from '../constants.service';
     RouterModule,
     CommonModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   templateUrl: './password-reset.component.html',
-  styleUrl: './password-reset.component.scss'
+  styleUrl: './password-reset.component.scss',
+  
 })
 export class PasswordResetComponent {
 
@@ -29,7 +33,12 @@ export class PasswordResetComponent {
   private uid: string | null = null;
   private token: string | null = null;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private constants: ConstantsService){}
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private constants: ConstantsService,
+    private toastr: ToastrService
+  ){}
 
   ngOnInit() {
     this.uid = this.route.snapshot.queryParamMap.get('uid');
@@ -62,14 +71,26 @@ export class PasswordResetComponent {
         next: (response: any) => {
           this.message = response.message;
           this.error = '';
+          this.toastr.success(this.message, 'Success', {
+            positionClass: this.constants.TOASTR_POSITION,
+            timeOut: this.constants.TOASTR_TIMEOUT
+          });
         },
         error: (error) => {
           this.error = error.error?.error || 'Error resetting password.';
           this.message = '';
+          this.toastr.error(this.error, 'Error', {
+            positionClass: this.constants.TOASTR_POSITION,
+            timeOut: this.constants.TOASTR_TIMEOUT
+          });
         },
       });
     } else {
       this.error = 'Unknown link.';
+      this.toastr.error(this.error, 'Error', {
+        positionClass: this.constants.TOASTR_POSITION,
+        timeOut: this.constants.TOASTR_TIMEOUT
+      });
     }
   }
 
