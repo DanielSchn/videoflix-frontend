@@ -51,7 +51,6 @@ export class LoginComponent {
               });
               return;
             }
-
             this.message = response.message;
             this.error = '';
             this.toastr.success(this.message, 'Success', {
@@ -64,7 +63,6 @@ export class LoginComponent {
             } else {
               sessionStorage.setItem('token', token);
             }
-
             setTimeout(() => {
               this.router.navigate(['/breakout']);
             }, 2000);
@@ -86,6 +84,7 @@ export class LoginComponent {
         });
       }    
   }
+
 
   togglePasswordVisibility() {
     this.passwordVisible = !this.passwordVisible;
