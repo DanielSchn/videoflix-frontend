@@ -95,8 +95,8 @@ export class PasswordResetComponent {
       });
     }
     setTimeout(() => {
-      this.router.navigate(['/']);
-    }, 3500);
+      this.router.navigate(['/login']);
+    }, 2000);
   }
 
 }
