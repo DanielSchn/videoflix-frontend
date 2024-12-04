@@ -6,6 +6,7 @@ import { Router, RouterModule } from '@angular/router';
 import { ConstantsService } from '../constants.service';
 import { ToastrService } from 'ngx-toastr';
 import { HeaderComponent } from '../shared/header/header.component';
+import { FooterComponent } from '../shared/footer/footer.component';
 
 @Component({
   selector: 'app-forgot-password',
@@ -15,7 +16,8 @@ import { HeaderComponent } from '../shared/header/header.component';
     CommonModule,
     FormsModule,
     HttpClientModule,
-    HeaderComponent
+    HeaderComponent,
+    FooterComponent
   ],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss'

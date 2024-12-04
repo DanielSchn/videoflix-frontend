@@ -6,6 +6,7 @@ import { Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ConstantsService } from '../constants.service';
 import { ToastrService } from 'ngx-toastr';
+import { FooterComponent } from '../shared/footer/footer.component';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ import { ToastrService } from 'ngx-toastr';
     FormsModule,
     CommonModule,
     RouterModule,
-    HttpClientModule
+    HttpClientModule,
+    FooterComponent
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'

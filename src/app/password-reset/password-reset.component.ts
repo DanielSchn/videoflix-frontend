@@ -6,6 +6,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ConstantsService } from '../constants.service';
 import { ToastrService } from 'ngx-toastr';
 import { HeaderComponent } from '../shared/header/header.component';
+import { FooterComponent } from '../shared/footer/footer.component';
 
 
 @Component({
@@ -16,7 +17,8 @@ import { HeaderComponent } from '../shared/header/header.component';
     CommonModule,
     FormsModule,
     HttpClientModule,
-    HeaderComponent
+    HeaderComponent,
+    FooterComponent
   ],
   templateUrl: './password-reset.component.html',
   styleUrl: './password-reset.component.scss',

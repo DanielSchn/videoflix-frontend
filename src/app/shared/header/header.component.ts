@@ -21,7 +21,7 @@ export class HeaderComponent {
 
   ngOnInit() {
     this.url = this.router.url;
-    if (this.url.includes('login')) {
+    if (this.url.includes('login') || this.url.includes('landing')) {
       this.loginPage = true;
     } else {
       this.loginPage = false;

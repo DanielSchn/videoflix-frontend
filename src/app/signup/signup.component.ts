@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ConstantsService } from '../constants.service';
 import { ToastrService } from 'ngx-toastr';
+import { FooterComponent } from '../shared/footer/footer.component';
 
 @Component({
   selector: 'app-signup',
@@ -15,7 +16,8 @@ import { ToastrService } from 'ngx-toastr';
     RouterModule,
     CommonModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FooterComponent
   ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'

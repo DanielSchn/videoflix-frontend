@@ -1,6 +1,6 @@
 <header>
     <img routerLink="/" class="logo" src="./assets/img/logo.png" alt="logo">
-    <div *ngIf="!loginPage" class="login-button-header">
+    <div routerLink="/login" *ngIf="!loginPage" class="login-button-header">
         <a routerLink="/login">Log in</a>
     </div>
 </header>
