@@ -1,0 +1,22 @@
+<div class="main-container">
+    <app-header></app-header>
+
+    <div class="site-container">
+        <div class="input-container">
+            <h1>Sign up</h1>
+            <form (submit)="signUp(); $event.preventDefault();">
+                <input class="login-input" id="email" name="email" type="email" [(ngModel)]="email" placeholder="Email address" required>
+                <input id="password" name="password" type="password" [(ngModel)]="password" placeholder="Enter a password" minlength="8" required>
+                <input id="confirmPassword" name="confirmPassword" type="password" [(ngModel)]="confirmPassword" placeholder="Confirm password" minlength="8" (keyup)="checkPasswordMatch()" required>
+                <div>
+                    <p *ngIf="isPasswordMismatch" style="color: red;">The passwords do not match.</p>
+                    <p *ngIf="passwordTooShort" style="color: red;">The password is too short. Please at least 8 characters.</p>
+                </div>
+
+                <button [ngClass]="isButtonDisabled ? 'not-filled' : 'filled'" type="submit" [disabled]="isButtonDisabled">Reset password</button>
+            </form>
+            
+        </div>
+    </div>
+    
+</div>

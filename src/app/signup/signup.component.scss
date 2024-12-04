@@ -2,7 +2,7 @@
     margin: 0;
     width: 100vw;
     height: 100vh;
-    background-image: url('/assets/img/login_forgot.png');
+    background-image: url('/assets/img/signup.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -57,7 +57,7 @@ header {
 
 .input-container {
     width: 520px;
-    height: 520px;
+    height: 450px;
     background-color: #FFFFFF;
     border: unset;
     border-radius: 48px;
@@ -77,10 +77,10 @@ header {
         text-align: center;
         margin: 0;
     }
-}
 
-.warn-container {
-    height: 24px;
+    div {
+        height: 24px;
+    }
 }
 
 form {
@@ -91,6 +91,16 @@ form {
     gap: 24px;
     width: 100%;
 
+    input {
+        width: 75%;
+        height: 48px;
+        border-radius: 12px;
+        border: solid 1px #2E3EDF;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 18px;
+        padding-left: 16px;
+    }
+
     button {
         border: unset;
         border-radius: 40px;
@@ -99,7 +109,6 @@ form {
         color: #FFFFFF;
         font-weight: 700;
         font-size: 18px;
-        margin: 32px 0;
         
         &.not-filled {
             background-color: rgba(46, 62, 223, 0.5);
@@ -110,78 +119,4 @@ form {
             cursor: pointer;
         }
     }
-}
-
-.login-input {
-    width: 75%;
-    height: 48px;
-    border-radius: 12px;
-    border: solid 1px #2E3EDF;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 18px;
-    padding-left: 16px;
-}
-
-
-.password-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: 75%;
-    height: 48px;
-}
-
-.toggle-password {
-    position: absolute;
-    right: 10px;
-    cursor: pointer;
-    padding: 8px;
-
-    img {
-        width: 20px;
-        height: auto;
-      }
-  }
-
-  .password-input {
-    flex: 1;
-  }
-
-  a {
-    text-decoration: none;
-    color: #2E3EDF;
-    font-size: 18px;
-    font-weight: 700;
-  }
-
-  .sign-up-container {
-    display: flex;
-    flex-direction: row;
-    gap: 24px;
-    align-items: center;
-    justify-content: center;
-    margin-top: 16px;
-
-    p {
-        font-size: 18px;
-        font-weight: 500;
-    }
-  }
-
-.checkbox-container {
-    height: 20px;
-    width: 75%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 8px;
-
-    >p {
-        font-size: 16px;
-        font-weight: 400;
-    }
-}
-
-.checkbox {
-    height: 20px;
 }
