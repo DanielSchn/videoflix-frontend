@@ -1,0 +1,37 @@
+header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 108px;
+    justify-content: space-between;
+    position: fixed;
+}
+
+.logo {
+    margin-left: 96px;
+    width: 200px;
+    cursor: pointer;
+}
+
+.login-button-header {
+    width: 99px;
+    height: 48px;
+    border-radius: 40px;
+    border: unset;
+    margin-right: 96px;
+    background-color: #2E3EDF;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    a {
+        text-decoration: none;
+        color: #FFFFFF;
+        font-family: 'DM Sans';
+        font-weight: 700;
+        font-size: 18px;
+    }
+    
+}

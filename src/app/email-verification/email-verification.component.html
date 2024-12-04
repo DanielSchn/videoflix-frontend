@@ -1,0 +1,55 @@
+<!-- <h1>Videoflix</h1>
+
+<div *ngIf="verificationStatus === 'loading'">
+    <p>Bitte warten, der Account wird verifiziert!</p>
+</div>
+
+<div *ngIf="verificationStatus === 'success'">
+    <h2>Account erfolgreich bestätigt!</h2>
+    <p>Sie werden gleich weitergeleitet...</p>
+</div>
+
+<div *ngIf="verificationStatus === 'error'">
+    <h2>Verifizierung fehlgeschlagen!</h2>
+    <p>{{ errorMessage }}</p>
+    <a routerLink="/">Zurück zur Startseite</a>
+</div> -->
+
+<div class="main-container">
+    <div class="container">
+        <div class="logo-head-container">
+            <img src="https://videoflix.dschneider-dev.de/assets/mail_logo.png">
+        </div>
+
+        <div *ngIf="verificationStatus === 'loading'">
+            <p>Bitte warten Sie, bis der Account fertig verifiziert ist!</p>
+            <p>Sie werden dann automatisch weitergeleitet.</p>
+            <p>Wenn dies unerwartet lange dauert, dann versuchen Sie es noch einmal.</p>
+        </div>
+
+        <div *ngIf="verificationStatus === 'success'">
+            <p>Vielen Dank für die Bestätigung Ihres Accounts!</p>
+            <p>Wenn die automatische Weiterleitung nicht funktionieren sollte, klicken Sie bitte auf den Button:</p>
+            <div class="button-container">
+                <a href="https://videoflix.dschneider-dev.de" class="button">GoTo Videoflix</a>
+            </div>
+            <p>Und wenn der Button nicht funktioniert, kopieren Sie den folgenden Link und fügen Sie ihn in Ihren Browser ein:</p>
+            <p>https://videoflix.dschneider-dev.de</p>
+        </div>
+
+        <div *ngIf="verificationStatus === 'error'">
+            <h2>Verifizierung fehlgeschlagen!</h2>
+            <p>{{ errorMessage }}</p>
+            <div class="button-container">
+                <a routerLink="/" class="button">Zurück zur Startseite</a>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>Danke, dass Sie Videoflix nutzen!</p>
+            <p>Das Videoflix-Team</p>
+        </div>
+    </div> 
+</div>
+    
