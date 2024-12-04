@@ -32,6 +32,7 @@ export class PasswordResetComponent {
   error: string = '';
   isPasswordMismatch: boolean = false;
   isButtonDisabled: boolean = true;
+  passwordVisible: boolean = false;
 
   private uid: string | null = null;
   private token: string | null = null;
@@ -99,6 +100,10 @@ export class PasswordResetComponent {
     setTimeout(() => {
       this.router.navigate(['/login']);
     }, 2000);
+  }
+
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
   }
 
 }

@@ -27,6 +27,7 @@ export class SignupComponent {
   isPasswordMismatch: boolean = false;
   isButtonDisabled: boolean = true;
   passwordTooShort: boolean = false;
+  passwordVisible: boolean = false;
   password: string = '';
   confirmPassword: string = '';
   email: string = '';
@@ -61,6 +62,10 @@ export class SignupComponent {
 
   checkPasswordLength() {
      return this.password.length <= 7;
+  }
+
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
   }
 
   signUp() {
