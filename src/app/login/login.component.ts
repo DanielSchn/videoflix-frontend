@@ -66,7 +66,7 @@ export class LoginComponent {
               sessionStorage.setItem('token', token);
             }
             setTimeout(() => {
-              this.router.navigate(['/breakout']);
+              this.router.navigate(['/video-list']);
             }, 2000);
           },
           error: (error) => {

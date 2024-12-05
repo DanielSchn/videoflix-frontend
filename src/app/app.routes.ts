@@ -7,6 +7,7 @@ import { SignupComponent } from './signup/signup.component';
 import { LandingpageComponent } from './landingpage/landingpage.component';
 import { ImpressumComponent } from './impressum/impressum.component';
 import { DatenschutzComponent } from './datenschutz/datenschutz.component';
+import { VideoListComponent } from './video-list/video-list.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'landing', pathMatch: 'full' },
@@ -18,4 +19,5 @@ export const routes: Routes = [
     { path: 'sign-up', component: SignupComponent },
     { path: 'legal', component: ImpressumComponent },
     { path: 'privacy', component: DatenschutzComponent },
+    { path: 'video-list', component: VideoListComponent },
 ];

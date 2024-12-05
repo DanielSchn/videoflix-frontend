@@ -1,40 +1,37 @@
-<div class="main-container">
-    <app-header></app-header>
-
-    <div class="site-container">
-        <div class="input-container">
-            <h1>Log in</h1>
-            <form (submit)="login(); $event.preventDefault();">
-                <input class="login-input" id="email" name="email" type="email" [(ngModel)]="email" placeholder="Email address" required>
-                <div class="password-container">
-                    <input class="password-input login-input" id="password" name="password" [type]="passwordVisible ? 'text' : 'password'" [(ngModel)]="password" placeholder="Password" required>
-                    <span (click)="togglePasswordVisibility()" class="toggle-password">
-                        <img [src]="passwordVisible ? 'assets/icons/view.png' : 'assets/icons/hidden.png'" alt="toggle visibility">
-                    </span>
-                </div>
-                <div class="checkbox-container">
-                    <input class="checkbox" type="checkbox" name="rememberMe" [(ngModel)]="rememberMe">
-                    <p>Remember me</p>
-                </div>
-                
-                
-                <!-- <div class="warn-container">
-                    <p *ngIf="" style="color: red;">The passwords do not match.</p>
-                </div> -->
-
-                <button [ngClass]="email.trim().length > 2 && password.trim().length > 2 ? 'filled' : 'not-filled'" type="submit" [disabled]="email.trim().length < 2 && password.trim().length < 2">Log in</button>
-            </form>
-
-            <a routerLink="/forgot-password">Forgot password?</a>
-
-            <div class="sign-up-container">
-                <p>New to Videoflix?</p>
-                <a routerLink="/sign-up">Sign up now</a>
-            </div>
-            
-        </div>
-    </div>
-
-    <app-footer></app-footer>
+<body>
+    <div class="main-container">
+        <app-header></app-header>
     
-</div>
+        <div class="site-container">
+            <div class="input-container">
+                <h1>Log in</h1>
+                <form (submit)="login(); $event.preventDefault();">
+                    <input class="login-input" id="email" name="email" type="email" [(ngModel)]="email" placeholder="Email address" required>
+                    <div class="password-container">
+                        <input class="password-input login-input" id="password" name="password" [type]="passwordVisible ? 'text' : 'password'" [(ngModel)]="password" placeholder="Password" required>
+                        <span (click)="togglePasswordVisibility()" class="toggle-password">
+                            <img [src]="passwordVisible ? 'assets/icons/view.png' : 'assets/icons/hidden.png'" alt="toggle visibility">
+                        </span>
+                    </div>
+                    <div class="checkbox-container">
+                        <input class="checkbox" type="checkbox" name="rememberMe" [(ngModel)]="rememberMe">
+                        <p>Remember me</p>
+                    </div>
+    
+                    <button [ngClass]="email.trim().length > 2 && password.trim().length > 2 ? 'filled' : 'not-filled'" type="submit" [disabled]="email.trim().length < 2 && password.trim().length < 2">Log in</button>
+                </form>
+    
+                <a routerLink="/forgot-password">Forgot password?</a>
+    
+                <div class="sign-up-container">
+                    <p>New to Videoflix?</p>
+                    <a routerLink="/sign-up">Sign up now</a>
+                </div>
+                
+            </div>
+        </div>
+    
+        <app-footer></app-footer>
+        
+    </div>
+</body>
