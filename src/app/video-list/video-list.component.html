@@ -1,5 +1,18 @@
 <body>
+    <header>
+        <img src="./assets/img/vf_only_icon.png" alt="videoflix icon">
+        <div (click)="logout(); $event.preventDefault();" class="logout-button">
+            <img src="./assets/img/logout.png" alt="logout">
+            <p class="dm-sans-font">Log out</p>
+        </div>
+    </header>
+
+    <app-preview-banner></app-preview-banner>
+    <app-video-slideshow></app-video-slideshow>
+
     <div class="main-container">
 
     </div>
+
+    <app-footer></app-footer>
 </body>
