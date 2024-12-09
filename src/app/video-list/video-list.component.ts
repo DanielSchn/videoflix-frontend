@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { PreviewBannerComponent } from './preview-banner/preview-banner.component';
 import { VideoSlideshowComponent } from './video-slideshow/video-slideshow.component';
 import { FooterComponent } from '../shared/footer/footer.component';
+import { HeaderComponent } from '../shared/header/header.component';
 
 @Component({
   selector: 'app-video-list',
@@ -10,7 +11,8 @@ import { FooterComponent } from '../shared/footer/footer.component';
   imports: [
     PreviewBannerComponent,
     VideoSlideshowComponent,
-    FooterComponent
+    FooterComponent,
+    HeaderComponent
   ],
   templateUrl: './video-list.component.html',
   styleUrl: './video-list.component.scss'
@@ -22,10 +24,5 @@ export class VideoListComponent {
   }
 
 
-  logout() {
-    localStorage.removeItem('token');
-    setTimeout(() => {
-      this.router.navigate(['/']);  
-    }, 500);
-  }
+
 }

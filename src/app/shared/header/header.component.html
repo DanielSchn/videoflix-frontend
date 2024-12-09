@@ -1,6 +1,13 @@
-<header>
+<header *ngIf="!videoListSite">
     <img routerLink="/" class="logo" src="./assets/img/logo.png" alt="logo">
     <div routerLink="/login" *ngIf="!loginPage" class="login-button-header">
         <a routerLink="/login">Log in</a>
+    </div>
+</header>
+<header *ngIf="videoListSite">
+    <img routerLink="/" class="only-logo" src="./assets/img/vf_only_icon.png" alt="logo">
+    <div (click)="logout(); $event.preventDefault();" class="logout-button">
+        <img src="./assets/img/logout.png" alt="logout">
+        <p class="dm-sans-font">Log out</p>
     </div>
 </header>

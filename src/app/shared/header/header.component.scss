@@ -9,9 +9,35 @@ header {
 }
 
 .logo {
-    // margin-left: 96px;
     width: 200px;
     cursor: pointer;
+}
+
+.only-logo {
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+}
+
+.logout-button {
+        width: 144px;
+        height: 48px;
+        background-color: #2E3EDF;
+        color: #FFFFFF;
+        font-weight: 700;
+        font-size: 18px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        border-radius: 40px;
+        border: unset;
+        cursor: pointer;
+
+        >img {
+            width: 24px;
+            height: 24px;
+        }
 }
 
 .login-button-header {

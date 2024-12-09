@@ -16,6 +16,7 @@ export class HeaderComponent {
 
   loginPage: boolean = false;
   url: string | null = '';
+  videoListSite: boolean = false;
 
   constructor(private router: Router){}
 
@@ -23,8 +24,19 @@ export class HeaderComponent {
     this.url = this.router.url;
     if (this.url.includes('login') || this.url.includes('landing')) {
       this.loginPage = true;
+      this.videoListSite = false;
     } else {
+      if (this.url.includes('video-list')) {
+        this.videoListSite = true;
+      } 
       this.loginPage = false;
     }
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    setTimeout(() => {
+      this.router.navigate(['/']);  
+    }, 500);
   }
 }
