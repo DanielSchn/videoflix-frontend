@@ -23,6 +23,10 @@ export class PreviewBannerComponent {
   ) {
     this.loadData();
     this.apiBaseUrl = this.constants.API_BASE_URL;
+    setTimeout(() => {
+      console.log(this.list);
+      
+    }, 1000);
   }
 
   loadData() {
