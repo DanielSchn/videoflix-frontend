@@ -1,8 +1,10 @@
 div {
     width: 100vw;
-    // max-width: 1920px;
+    max-width: 1920px;
+    display: flex;
+    justify-content: center;
 
-    >img {
+    >video {
         width: 100%;
     }
 }

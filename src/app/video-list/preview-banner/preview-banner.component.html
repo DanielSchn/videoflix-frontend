@@ -1,4 +1,4 @@
 <div>
-    <img src="./assets/img/breakout.png" alt="preview-banner">
+     <video *ngIf="list && list.length > 0" loop autoplay [muted]="true" [src]="apiBaseUrl + list[1].video_720p"></video>
 </div>
 

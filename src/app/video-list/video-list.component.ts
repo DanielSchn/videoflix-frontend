@@ -4,6 +4,10 @@ import { PreviewBannerComponent } from './preview-banner/preview-banner.componen
 import { VideoSlideshowComponent } from './video-slideshow/video-slideshow.component';
 import { FooterComponent } from '../shared/footer/footer.component';
 import { HeaderComponent } from '../shared/header/header.component';
+import { VideoService } from '../video.service';
+import { HttpClientModule } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-video-list',
@@ -12,16 +16,35 @@ import { HeaderComponent } from '../shared/header/header.component';
     PreviewBannerComponent,
     VideoSlideshowComponent,
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    HttpClientModule,
+    CommonModule
   ],
   templateUrl: './video-list.component.html',
   styleUrl: './video-list.component.scss'
 })
 export class VideoListComponent {
 
-  constructor(private router: Router) {
-    
+  list$: Observable<any[]> = this.VideoService.fetchList();
+
+  constructor(private router: Router, private VideoService: VideoService) {
+    // this.loadData();
   }
+
+  // ngOnInit() {
+  //   this.loadData();
+  //   console.log(this.list);
+  //   setTimeout(() => {
+  //     console.log(this.list);  
+  //   }, 2000);
+    
+  // }
+
+  // loadData() {
+  //   this.VideoService.fetchList().subscribe((data) => {
+  //     this.list = data;
+  //   });
+  // }
 
 
 
