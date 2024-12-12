@@ -31,7 +31,8 @@
             ],
             "styles": [
               "src/styles.scss",
-              "src/toastr.css"
+              "src/toastr.css",
+              "node_modules/@videogular/ngx-videogular/fonts/videogular.css"
             ],
             "scripts": []
           },

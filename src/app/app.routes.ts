@@ -8,6 +8,7 @@ import { LandingpageComponent } from './landingpage/landingpage.component';
 import { ImpressumComponent } from './impressum/impressum.component';
 import { DatenschutzComponent } from './datenschutz/datenschutz.component';
 import { VideoListComponent } from './video-list/video-list.component';
+import { VideoplayerComponent } from './videoplayer/videoplayer.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'landing', pathMatch: 'full' },
@@ -20,4 +21,5 @@ export const routes: Routes = [
     { path: 'legal', component: ImpressumComponent },
     { path: 'privacy', component: DatenschutzComponent },
     { path: 'video-list', component: VideoListComponent },
+    { path: 'video-player', component: VideoplayerComponent }
 ];
