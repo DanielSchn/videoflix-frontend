@@ -1,12 +1,19 @@
-.main-container {
-    margin: 0;
-    width: 100vw;
+body {
     height: 100vh;
+}
+
+.main-container {
+    // margin: 0;
+    width: 100vw;
+    height: 100%;
     background-image: url('/assets/img/start.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     font-family: 'DM Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .button-container {
@@ -169,4 +176,8 @@ button {
 
 .checkbox {
     height: 20px;
+}
+
+app-footer {
+    margin-top: auto;
 }
