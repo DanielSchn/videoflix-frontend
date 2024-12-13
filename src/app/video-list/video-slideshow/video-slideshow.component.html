@@ -1,1 +1,58 @@
-<p style="color: white;">video-slideshow works!</p>
+<div class="main-container">
+    
+    <div class="new-on-videoflix dm-sans-font">
+        <h1>New on Videoflix</h1>
+        <div class="slideshow">
+            @for (video of list; track list) {
+                <div class="thumbnail-container">
+                    <img [src]="constants.API_BASE_URL + video.thumbnail" [alt]="video.title">
+                </div>
+            }
+        </div>
+        
+    </div>
+
+    <div class="documentary dm-sans-font">
+        <h1>Documentary</h1>
+        <div class="slideshow">
+            @for (video of list; track list) {
+                <div class="thumbnail-container">
+                    <img [src]="constants.API_BASE_URL + video.thumbnail" [alt]="video.title">
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="crime dm-sans-font">
+        <h1>Crime</h1>
+        <div class="slideshow">
+            @for (video of list; track list) {
+                <div class="thumbnail-container">
+                    <img [src]="constants.API_BASE_URL + video.thumbnail" [alt]="video.title">
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="sports dm-sans-font">
+        <h1>Sports</h1>
+        <div class="slideshow">
+            @for (video of list; track list) {
+                <div class="thumbnail-container">
+                    <img [src]="constants.API_BASE_URL + video.thumbnail" [alt]="video.title">
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="romance dm-sans-font">
+        <h1>Romance</h1>
+        <div class="slideshow">
+            @for (video of list; track list) {
+                <div class="thumbnail-container">
+                    <img [src]="constants.API_BASE_URL + video.thumbnail" [alt]="video.title">
+                </div>
+            }
+        </div>
+    </div>
+</div>

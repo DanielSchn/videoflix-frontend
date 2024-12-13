@@ -34,7 +34,10 @@ export class PreviewBannerComponent {
   ngOnInit(): void {
     this.videoService.getList().subscribe((data) => {
       this.list = data;
-    })
+    });
+    setTimeout(() => {
+      console.log(this.list);
+    }, 3000);
   }
 
   // loadData() {

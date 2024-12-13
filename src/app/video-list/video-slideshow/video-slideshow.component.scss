@@ -1,0 +1,46 @@
+.main-container {
+    background-color: rgba(235, 31, 16, 0.2);
+    width: 100vw;
+    max-width: 1920px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 16px;
+}
+
+h1 {
+    color: #FFFFFF;
+    font-size: clamp(0.875rem, 0.775rem + 0.5vw, 1.375rem);
+}
+
+// .new-on-videoflix {
+//     height: 100%;
+//     display: flex;
+//     flex-direction: column;
+// }
+
+.thumbnail-container {
+    height: auto;
+    display: flex;
+
+    >img {
+        height: 120px;
+        width: 208px;
+        object-fit: cover;
+    }
+}
+
+.slideshow {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 1920px;
+}
+
+@media (max-width: 1920px) {
+    .main-container {
+        padding: 0 96px;
+    }
+}
