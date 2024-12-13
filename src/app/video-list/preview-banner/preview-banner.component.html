@@ -7,7 +7,37 @@
             <span class="dm-sans-font">Play</span>
         </div>
     </div>
+    <vg-player *ngIf="list && list.length > 0">
+        <!-- <vg-overlay-play></vg-overlay-play> -->
+        <vg-buffering></vg-buffering>
     
-    <video *ngIf="list && list.length > 0" loop autoplay [muted]="true" [src]="apiBaseUrl + list[9].video_720p"></video>
+        <!-- <vg-scrub-bar>
+            <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+            <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
+        </vg-scrub-bar> -->
+    
+        <!-- <vg-controls> -->
+            <!-- <vg-play-pause></vg-play-pause> -->
+            <!-- <vg-playback-button></vg-playback-button> -->
+    
+            <!-- <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display> -->
+    
+            <!-- <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar> -->
+    
+            <!-- <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display> -->
+            <!-- <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display> -->
+    
+            <!-- <vg-track-selector></vg-track-selector> -->
+            <!-- <vg-mute></vg-mute> -->
+            <!-- <vg-volume></vg-volume> -->
+    
+            <!-- <vg-fullscreen></vg-fullscreen> -->
+        <!-- </vg-controls> -->
+    
+        <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" crossorigin autoplay muted loop>
+            <source [src]="apiBaseUrl + list[9].video_720p" type="video/mp4">
+        </video>
+    </vg-player>
+    <!-- <video *ngIf="list && list.length > 0" loop autoplay [muted]="true" [src]="apiBaseUrl + list[9].video_720p"></video> -->
 </div>
 
