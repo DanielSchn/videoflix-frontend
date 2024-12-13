@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { EmailVerificationComponent } from './email-verification/email-verification.component';
+import { VideoService } from './video.service';
 
 @Component({
   selector: 'app-root',
@@ -14,4 +15,15 @@ import { EmailVerificationComponent } from './email-verification/email-verificat
 })
 export class AppComponent {
   title = 'videoflix';
+  videoService = inject(VideoService);
+
+  constructor() {
+    this.loadVideos();
+  }
+
+  private loadVideos(): void {
+    this.videoService.fetchList().subscribe(() => {
+      console.log('Videos loaded!');
+    });
+  }
 }

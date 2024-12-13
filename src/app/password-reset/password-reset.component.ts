@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ConstantsService } from '../constants.service';
@@ -26,6 +26,12 @@ import { FooterComponent } from '../shared/footer/footer.component';
 })
 export class PasswordResetComponent {
 
+  http = inject(HttpClient);
+  constants = inject(ConstantsService);
+  toastr = inject(ToastrService);
+  router = inject(Router);
+  route = inject(ActivatedRoute);
+
   newPassword: string = '';
   confirmPassword: string = '';
   message: string = '';
@@ -37,13 +43,7 @@ export class PasswordResetComponent {
   private uid: string | null = null;
   private token: string | null = null;
 
-  constructor(
-    private route: ActivatedRoute,
-    private http: HttpClient,
-    private constants: ConstantsService,
-    private toastr: ToastrService,
-    private router: Router
-  ){}
+  constructor(){}
 
   ngOnInit() {
     this.uid = this.route.snapshot.queryParamMap.get('uid');

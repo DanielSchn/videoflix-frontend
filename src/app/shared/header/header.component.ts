@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({
@@ -14,11 +14,13 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 })
 export class HeaderComponent {
 
+  router = inject(Router);
+
   loginPage: boolean = false;
   url: string | null = '';
   videoListSite: boolean = false;
 
-  constructor(private router: Router){}
+  constructor(){}
 
   ngOnInit() {
     this.url = this.router.url;

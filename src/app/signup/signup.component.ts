@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { HeaderComponent } from '../shared/header/header.component';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -24,6 +24,11 @@ import { FooterComponent } from '../shared/footer/footer.component';
 })
 export class SignupComponent {
 
+  http = inject(HttpClient);
+  constants = inject(ConstantsService);
+  toastr = inject(ToastrService);
+  router = inject(Router);
+
   isPasswordMismatch: boolean = false;
   isButtonDisabled: boolean = true;
   passwordTooShort: boolean = false;
@@ -34,12 +39,7 @@ export class SignupComponent {
   message: string = '';
   error: string = '';
   
-  constructor(
-    private http: HttpClient,
-    private constants: ConstantsService,
-    private toastr: ToastrService,
-    private router: Router
-  ){}
+  constructor(){}
 
 
 

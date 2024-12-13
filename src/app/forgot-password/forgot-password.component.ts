@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { ConstantsService } from '../constants.service';
@@ -23,16 +23,17 @@ import { FooterComponent } from '../shared/footer/footer.component';
   styleUrl: './forgot-password.component.scss'
 })
 export class ForgotPasswordComponent {
+  
+  http = inject(HttpClient);
+  constants = inject(ConstantsService);
+  toastr = inject(ToastrService);
+  router = inject(Router);
+  
   email: string = '';
   message: string = '';
   error: string = '';
 
-  constructor(
-    private http: HttpClient,
-    private constants: ConstantsService,
-    private toastr: ToastrService,
-    private router: Router
-  ) {}
+  constructor() {}
 
   submitRequest() {
     this.http.post(this.constants.API_BASE_URL + 'api/password-reset/', { email: this.email }).subscribe({

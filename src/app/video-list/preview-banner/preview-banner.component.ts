@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { VideoService } from '../../video.service';
 import { ConstantsService } from '../../constants.service';
 import { CommonModule } from '@angular/common';
@@ -22,24 +22,24 @@ import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
 })
 export class PreviewBannerComponent {
 
+  videoService = inject(VideoService);
+  constants = inject(ConstantsService);
+  
   list: any[] = [];
-  apiBaseUrl: string = '';
+  apiBaseUrl: string = this.constants.API_BASE_URL;
+  
 
-  constructor(
-    private VideoService: VideoService,
-    private constants: ConstantsService
-  ) {
-    this.loadData();
-    this.apiBaseUrl = this.constants.API_BASE_URL;
-    setTimeout(() => {
-      console.log(this.list);
-      
-    }, 1000);
-  }
+  constructor() {}
 
-  loadData() {
-    this.VideoService.fetchList().subscribe((data) => {
+  ngOnInit(): void {
+    this.videoService.getList().subscribe((data) => {
       this.list = data;
-    });
+    })
   }
+
+  // loadData() {
+  //   this.VideoService.fetchList().subscribe((data) => {
+  //     this.list = data;
+  //   });
+  // }
 }

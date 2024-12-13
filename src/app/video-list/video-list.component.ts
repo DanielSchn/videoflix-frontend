@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { PreviewBannerComponent } from './preview-banner/preview-banner.component';
 import { VideoSlideshowComponent } from './video-slideshow/video-slideshow.component';
@@ -25,9 +25,12 @@ import { CommonModule } from '@angular/common';
 })
 export class VideoListComponent {
 
-  list$: Observable<any[]> = this.VideoService.fetchList();
+  router = inject(Router);
+  videoService = inject(VideoService);
 
-  constructor(private router: Router, private VideoService: VideoService) {
+  list$: Observable<any[]> = this.videoService.fetchList();
+
+  constructor() {
     // this.loadData();
   }
 

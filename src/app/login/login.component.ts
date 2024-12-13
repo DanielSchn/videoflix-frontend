@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { HeaderComponent } from '../shared/header/header.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -24,6 +24,11 @@ import { FooterComponent } from '../shared/footer/footer.component';
 })
 export class LoginComponent {
 
+  http = inject(HttpClient);
+  constants = inject(ConstantsService);
+  toastr = inject(ToastrService);
+  router = inject(Router);
+
   email: string = '';
   password: string = '';
   passwordVisible: boolean = false;
@@ -31,12 +36,7 @@ export class LoginComponent {
   error: string = '';
   rememberMe: boolean = false;
 
-  constructor(
-    private http: HttpClient,
-    private constants: ConstantsService,
-    private toastr: ToastrService,
-    private router: Router
-  ){}
+  constructor(){}
 
   login() {
       if (this.email && this.password) {
@@ -70,7 +70,7 @@ export class LoginComponent {
             }, 2000);
           },
           error: (error) => {
-            this.error = error.error?.error || 'Error during log in.';
+            this.error = error.error?.error || 'Error during log in. Check login data and try again.';
             this.message = '';
             this.toastr.error(this.error, 'Error', {
               positionClass: this.constants.TOASTR_POSITION,

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ConstantsService } from '../constants.service';
 import { ToastrService } from 'ngx-toastr';
@@ -17,17 +17,18 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './email-verification.component.scss'
 })
 export class EmailVerificationComponent {
+  
+  route = inject(ActivatedRoute);
+  http = inject(HttpClient);
+  router = inject(Router);
+  constants = inject(ConstantsService);
+  toastr = inject(ToastrService);
+  
   verificationStatus: 'loading' | 'success' | 'error' = 'loading';
   errorMessage: string = '';
   message: string = '';
   
-  constructor(
-    private route: ActivatedRoute,
-    private http: HttpClient,
-    private router: Router,
-    private constants: ConstantsService,
-    private toastr: ToastrService,
-  ) {}
+  constructor() {}
 
   ngOnInit(): void {
     const uid = this.route.snapshot.queryParamMap.get('uid');
