@@ -35,7 +35,7 @@ app-preview-banner {
 app-video-slideshow {
     width: 100%;
     max-width: 1920px;
-    margin-top: -50px; /* Negativer Margin-Wert, um die Slideshow „kleben“ zu lassen */
+    margin-top: -128px; /* Negativer Margin-Wert, um die Slideshow „kleben“ zu lassen */
     z-index: 1; /* Überlagert den Preview-Banner */
     position: relative;
 }

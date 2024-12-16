@@ -1,7 +1,7 @@
 <div class="main-container">
     <div class="description-container">
-        <h1 *ngIf="list && list.length > 0" class="dm-sans-font">{{ list[9].title }}</h1>
-        <p *ngIf="list && list.length > 0" class="dm-sans-font">{{ list[9].description }}</p>
+        <h1 *ngIf="list && list.length > 0" class="dm-sans-font">{{ list[randomNumber].title }}</h1>
+        <p *ngIf="list && list.length > 0" class="dm-sans-font">{{ list[randomNumber].description }}</p>
         <div class="play-button">
             <img src="./assets/icons/play_arrow.png" alt="play">
             <span class="dm-sans-font">Play</span>
@@ -11,7 +11,7 @@
         <vg-buffering></vg-buffering>
     
         <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" crossorigin autoplay muted loop oncanplay="this.play()" onloadedmetadata="this.muted = true">
-            <source [src]="apiBaseUrl + list[9].video_720p" type="video/mp4">
+            <source [src]="mediaBaseUrl + list[randomNumber].video_480p" type="video/mp4">
         </video>
     </vg-player>
     <!-- <video *ngIf="list && list.length > 0" loop autoplay [muted]="true" [src]="apiBaseUrl + list[9].video_720p"></video> -->

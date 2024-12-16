@@ -3,6 +3,7 @@ import { VideoService } from '../../video.service';
 import { ConstantsService } from '../../constants.service';
 import { CommonModule } from '@angular/common';
 import { Videolist } from '../../interfaces/videolist.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-video-slideshow',
@@ -17,6 +18,7 @@ export class VideoSlideshowComponent {
 
   videoService = inject(VideoService);
   constants = inject(ConstantsService);
+  router = inject(Router)
   
   list: Videolist[] = [];
   apiBaseUrl: string = this.constants.API_BASE_URL;
@@ -30,7 +32,13 @@ export class VideoSlideshowComponent {
     });
     setTimeout(() => {
       console.log(this.list);
-    }, 3000);
+      }, 3000);
+  }
+
+
+  playVideo(source: string): void {
+    this.videoService.setVideoSource(source); // Videoquelle im Service speichern
+    this.router.navigate(['/video-player']); // Zur Videoplayer-Komponente navigieren
   }
 
 

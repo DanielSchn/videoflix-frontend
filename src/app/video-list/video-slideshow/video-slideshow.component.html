@@ -16,9 +16,12 @@
         <h1>Documentary</h1>
         <div class="slideshow">
             @for (video of list; track list) {
-                <div class="thumbnail-container">
-                    <img [src]="constants.API_MEDIA_URL + video.thumbnail" [alt]="video.title">
-                </div>
+                @if (video.category == 'documentary') {
+                    <div class="thumbnail-container">
+                        <img [src]="constants.API_MEDIA_URL + video.thumbnail" [alt]="video.title">
+                    </div>
+                }
+                
             }
         </div>
     </div>
@@ -27,9 +30,12 @@
         <h1>Crime</h1>
         <div class="slideshow">
             @for (video of list; track list) {
-                <div class="thumbnail-container">
-                    <img [src]="constants.API_MEDIA_URL + video.thumbnail" [alt]="video.title">
-                </div>
+                @if (video.category == 'crime') {
+                    <div class="thumbnail-container">
+                        <img [src]="constants.API_MEDIA_URL + video.thumbnail" [alt]="video.title">
+                    </div>
+                }
+                
             }
         </div>
     </div>
@@ -38,9 +44,13 @@
         <h1>Sports</h1>
         <div class="slideshow">
             @for (video of list; track list) {
-                <div class="thumbnail-container">
-                    <img [src]="constants.API_MEDIA_URL + video.thumbnail" [alt]="video.title">
-                </div>
+                @if (video.category == 'sports') {
+                    <div class="thumbnail-container">
+                        <img (click)="playVideo(constants.API_MEDIA_URL + video.video_1080p)" [src]="constants.API_MEDIA_URL + video.thumbnail" [alt]="video.title">
+                        
+                    </div>
+                }
+                
             }
         </div>
     </div>
@@ -49,9 +59,12 @@
         <h1>Romance</h1>
         <div class="slideshow">
             @for (video of list; track list) {
-                <div class="thumbnail-container">
-                    <img [src]="constants.API_MEDIA_URL + video.thumbnail" [alt]="video.title">
-                </div>
+                @if (video.category == 'romance') {
+                    <div class="thumbnail-container">
+                        <img [src]="constants.API_MEDIA_URL + video.thumbnail" [alt]="video.title">
+                    </div>
+                }
+                
             }
         </div>
     </div>

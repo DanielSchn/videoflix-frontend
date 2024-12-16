@@ -6,6 +6,7 @@ import {VgCoreModule} from '@videogular/ngx-videogular/core';
 import {VgControlsModule} from '@videogular/ngx-videogular/controls';
 import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
 import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
+import { Videolist } from '../../interfaces/videolist.interface';
 
 @Component({
   selector: 'app-preview-banner',
@@ -25,8 +26,10 @@ export class PreviewBannerComponent {
   videoService = inject(VideoService);
   constants = inject(ConstantsService);
   
-  list: any[] = [];
+  list: Videolist[] = [];
   apiBaseUrl: string = this.constants.API_BASE_URL;
+  mediaBaseUrl: string = this.constants.API_MEDIA_URL;
+  randomNumber: number = Math.floor(Math.random() * 7) + 1;
   
 
   constructor() {}

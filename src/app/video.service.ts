@@ -22,4 +22,14 @@ export class VideoService {
   getList(): Observable<any[]> {
     return this.listSubject.asObservable();
   }
+
+  private videoSource: string = '';
+
+  setVideoSource(source: string): void {
+    this.videoSource = source;
+  }
+
+  getVideoSource(): string {
+    return this.videoSource;
+  }
 }

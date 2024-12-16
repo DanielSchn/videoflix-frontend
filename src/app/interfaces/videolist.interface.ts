@@ -6,4 +6,5 @@ export interface Videolist {
     video_480p: string;
     video_720p: string;
     video_1080p: string;
+    category: string;
 }
