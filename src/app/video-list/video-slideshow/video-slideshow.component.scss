@@ -14,12 +14,6 @@ h1 {
     font-size: clamp(0.875rem, 0.775rem + 0.5vw, 1.375rem);
 }
 
-// .new-on-videoflix {
-//     height: 100%;
-//     display: flex;
-//     flex-direction: column;
-// }
-
 .thumbnail-container {
     height: auto;
     display: flex;
@@ -28,6 +22,11 @@ h1 {
         height: 120px;
         width: 208px;
         object-fit: cover;
+        cursor: pointer;
+
+        &:hover {
+            filter: brightness(1.1);
+        }
     }
 }
 

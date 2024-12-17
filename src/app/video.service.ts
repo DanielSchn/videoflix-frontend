@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { ConstantsService } from './constants.service';
+import { Videolist } from './interfaces/videolist.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -23,13 +24,23 @@ export class VideoService {
     return this.listSubject.asObservable();
   }
 
-  private videoSource: string = '';
+  private videoSource: Videolist = {
+    id: 0,
+    title: '',
+    description: '',
+    thumbnail: '',
+    video_480p: '',
+    video_720p: '',
+    video_1080p: '',
+    category: '',
+  };
 
-  setVideoSource(source: string): void {
+  setVideoSource(source: Videolist): void {
     this.videoSource = source;
+    console.log('VIDEOSOURCE', this.videoSource);
   }
 
-  getVideoSource(): string {
+  getVideoSource(): Videolist {
     return this.videoSource;
   }
 }

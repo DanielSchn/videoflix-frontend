@@ -9,11 +9,10 @@
     </div>
     <vg-player *ngIf="list && list.length > 0">
         <vg-buffering></vg-buffering>
-    
-        <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" crossorigin autoplay muted loop oncanplay="this.play()" onloadedmetadata="this.muted = true">
-            <source [src]="mediaBaseUrl + list[randomNumber].video_480p" type="video/mp4">
+
+        <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" crossorigin autoplay muted loop
+            oncanplay="this.play()" onloadedmetadata="this.muted = true">
+            <source [src]="mediaBaseUrl + list[randomNumber].video_720p" type="video/mp4">
         </video>
     </vg-player>
-    <!-- <video *ngIf="list && list.length > 0" loop autoplay [muted]="true" [src]="apiBaseUrl + list[9].video_720p"></video> -->
 </div>
-

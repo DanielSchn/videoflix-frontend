@@ -19,12 +19,11 @@ export class VideoSlideshowComponent {
   videoService = inject(VideoService);
   constants = inject(ConstantsService);
   router = inject(Router)
-  
+
   list: Videolist[] = [];
   apiBaseUrl: string = this.constants.API_BASE_URL;
-  
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
     this.videoService.getList().subscribe((data) => {
@@ -32,14 +31,12 @@ export class VideoSlideshowComponent {
     });
     setTimeout(() => {
       console.log(this.list);
-      }, 3000);
+    }, 3000);
   }
 
 
-  playVideo(source: string): void {
-    this.videoService.setVideoSource(source); // Videoquelle im Service speichern
-    this.router.navigate(['/video-player']); // Zur Videoplayer-Komponente navigieren
+  playVideo(source: Videolist) {
+    this.videoService.setVideoSource(source);
+    this.router.navigate(['/video-player']);
   }
-
-
 }

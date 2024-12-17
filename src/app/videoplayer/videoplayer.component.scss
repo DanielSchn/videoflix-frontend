@@ -1,7 +1,6 @@
 .main-container {
     width: 100vw;
     height: 100vh;
-    // max-width: 1920px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -11,4 +10,36 @@
 vg-player {
     max-width: 1920px;
     height: auto;
+}
+
+.video-container {
+    max-width: 1920px;
+    margin: 0 auto;
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+video.video-js {
+    width: 100%;
+    height: auto;
+}
+
+.quality-selector {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 16px;
+}
+
+select {
+    padding: 5px;
+    font-size: 14px;
+}
+
+.video-js {
+    max-width: 75vw;
+    max-height: auto;
 }

@@ -32,9 +32,12 @@
             "styles": [
               "src/styles.scss",
               "src/toastr.css",
-              "node_modules/@videogular/ngx-videogular/fonts/videogular.css"
+              "node_modules/@videogular/ngx-videogular/fonts/videogular.css",
+              "node_modules/video.js/dist/video-js.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/video.js/dist/video.js"
+            ]
           },
           "configurations": {
             "production": {
