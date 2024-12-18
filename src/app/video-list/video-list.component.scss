@@ -1,17 +1,16 @@
+@import '../../mixin.scss';
+
 body {
-    background-color: #000000;
+    background-color: $black;
     height: 100vh;
     width: 100vw;
 }
 
 .main-container {
     height: 100%;
-    display: flex;
+    @include dFlex(space-between);
     flex-direction: column;
-    align-items: center;
     overflow-x: hidden;
-    justify-content: space-between;
-
 }
 
 app-header,
@@ -27,15 +26,15 @@ app-footer {
 app-preview-banner {
     width: 100%;
     max-width: 1920px;
-    height: auto; /* Automatische Höhe, um Inhalt zu berücksichtigen */
-    aspect-ratio: 16/9; /* Verhältnis für dynamische Höhe */
-    position: relative; /* Nötig für z-index bei Überlagerung */
+    height: auto;
+    aspect-ratio: 16/9;
+    position: relative;
 }
 
 app-video-slideshow {
     width: 100%;
     max-width: 1920px;
-    margin-top: -128px; /* Negativer Margin-Wert, um die Slideshow „kleben“ zu lassen */
-    z-index: 1; /* Überlagert den Preview-Banner */
+    margin-top: -128px;
+    z-index: 1;
     position: relative;
 }

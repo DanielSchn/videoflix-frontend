@@ -1,5 +1,6 @@
+@import '../../mixin.scss';
+
 .main-container {
-    // margin: 0;
     width: 100vw;
     height: 100%;
     background-image: url('/assets/img/signup.png');
@@ -12,56 +13,16 @@
     align-items: center;
 }
 
-header {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 108px;
-    justify-content: space-between;
-    position: fixed;
-}
-
-.logo {
-    margin-left: 96px;
-    width: 200px;
-    cursor: pointer;
-}
-
-.login-button-header {
-    width: 99px;
-    height: 48px;
-    border-radius: 40px;
-    border: unset;
-    margin-right: 96px;
-    background-color: #2E3EDF;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-
-    a {
-        text-decoration: none;
-        color: #FFFFFF;
-        font-family: 'DM Sans';
-        font-weight: 700;
-        font-size: 18px;
-    }
-    
-}
-
 .site-container {
     width: 100%;
     height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include dFlex();
 }
 
 .input-container {
     width: 520px;
     height: 450px;
-    background-color: #FFFFFF;
+    background-color: $white;
     border: unset;
     border-radius: 48px;
     display: flex;
@@ -72,7 +33,7 @@ header {
         margin-bottom: 16px;
         font-weight: 700;
         font-size: 48px;
-        color: #2E3EDF;
+        color: $purple;
         text-align: center;
     }
 
@@ -87,10 +48,8 @@ header {
 }
 
 form {
-    display: flex;
+    @include dFlex();
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     gap: 24px;
     width: 100%;
 
@@ -98,7 +57,7 @@ form {
         width: 75%;
         height: 48px;
         border-radius: 12px;
-        border: solid 1px #2E3EDF;
+        border: solid 1px $purple;
         font-family: 'DM Sans', sans-serif;
         font-size: 18px;
         padding-left: 16px;
@@ -109,17 +68,21 @@ form {
         border-radius: 40px;
         width: 144px;
         height: 48px;
-        color: #FFFFFF;
+        color: $white;
         font-weight: 700;
         font-size: 18px;
-        
+
         &.not-filled {
-            background-color: rgba(46, 62, 223, 0.5);
+            background-color: $purpleNotfilled;
         }
 
         &.filled {
-            background-color: #2E3EDF;
+            background-color: $purple;
             cursor: pointer;
+
+            &:hover {
+                background-color: $purpleHover;
+            }
         }
     }
 }
@@ -141,18 +104,18 @@ form {
     img {
         width: 20px;
         height: auto;
-      }
-  }
+    }
+}
 
-  .password-input {
+.password-input {
     flex: 1;
-  }
+}
 
-  .login-input {
+.login-input {
     width: 75%;
     height: 48px;
     border-radius: 12px;
-    border: solid 1px #2E3EDF;
+    border: solid 1px $purple;
     font-family: 'DM Sans', sans-serif;
     font-size: 18px;
     padding-left: 16px;

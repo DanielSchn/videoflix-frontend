@@ -1,10 +1,10 @@
+@import '../../../mixin.scss';
+
 header {
-    display: flex;
-    align-items: center;
+    @include dFlex(space-between);
     width: 100%;
     max-width: 1920px;
     height: 108px;
-    justify-content: space-between;
     position: fixed;
     padding: 0 96px;
     z-index: 100;
@@ -22,24 +22,28 @@ header {
 }
 
 .logout-button {
-        width: 144px;
-        height: 48px;
-        background-color: #2E3EDF;
-        color: #FFFFFF;
-        font-weight: 700;
-        font-size: 18px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 8px;
-        border-radius: 40px;
-        border: unset;
-        cursor: pointer;
+    width: 144px;
+    height: 48px;
+    background-color: $purple;
+    color: $white;
+    font-weight: 700;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 40px;
+    border: unset;
+    cursor: pointer;
 
-        >img {
-            width: 24px;
-            height: 24px;
-        }
+    &:hover {
+        background-color: $purpleHover;
+    }
+
+    >img {
+        width: 24px;
+        height: 24px;
+    }
 }
 
 .login-button-header {
@@ -47,20 +51,23 @@ header {
     height: 48px;
     border-radius: 40px;
     border: unset;
-    // margin-right: 96px;
-    background-color: #2E3EDF;
-    
+    background-color: $purple;
+
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
 
+    &:hover {
+        background-color: $purpleHover;
+    }
+
     a {
         text-decoration: none;
-        color: #FFFFFF;
+        color: $white;
         font-family: 'DM Sans';
         font-weight: 700;
         font-size: 18px;
     }
-    
+
 }

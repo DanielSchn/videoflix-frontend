@@ -1,0 +1,24 @@
+@mixin dFlex ($jc: center, $ai: center) {
+    display: flex;
+    justify-content: $jc;
+    align-items: $ai;
+}
+
+$white: #FFFFFF;
+$purple: #2E3EDF;
+$warnRed: #E61C40;
+$purpleHover: #0056b3;
+$grey: #B6B6B6;
+$black: #000000;
+$shadowBlack: #0000001A;
+$purpleNotfilled: #2E3EDF80;
+
+$skyblue: #00BEE8;
+$darkblue: #141D2F;
+
+
+
+$checked: #183771;
+$bluegreen: #1CE6B6;
+
+$valid: #70E61C;

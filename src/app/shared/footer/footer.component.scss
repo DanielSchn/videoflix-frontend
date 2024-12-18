@@ -1,23 +1,24 @@
+@import '../../../mixin.scss';
+
 .footer {
-    // position: absolute;
-    // bottom: 0;
-    // left: 0;
     width: 100%;
     max-width: 1920px;
     height: 108px;
     text-align: center;
     padding: 20px;
     font-size: 14px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include dFlex();
     gap: 32px;
 
     a {
         text-decoration: none;
-        color: #FFFFFF;
+        color: $white;
         font-size: 18px;
         font-weight: 500;
         cursor: pointer;
+
+        &:hover {
+            color: $purpleHover;
+        }
     }
-  }
+}
