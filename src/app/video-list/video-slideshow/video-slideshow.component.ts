@@ -20,6 +20,7 @@ export class VideoSlideshowComponent {
   videoService = inject(VideoService);
   router = inject(Router);
   apiMediaUrl = environment.API_MEDIA_URL;
+  categories = environment.CATEGORIES;
 
   list: Videolist[] = [];
 

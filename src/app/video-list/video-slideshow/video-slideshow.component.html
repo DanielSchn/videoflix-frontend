@@ -1,6 +1,6 @@
 <div class="main-container">
 
-    <div class="new-on-videoflix dm-sans-font">
+    <div class="dm-sans-font">
         <h1>New on Videoflix</h1>
         <div class="slideshow">
             @for (video of list; track list) {
@@ -11,55 +11,19 @@
         </div>
     </div>
 
-    <div class="documentary dm-sans-font">
-        <h1>Documentary</h1>
-        <div class="slideshow">
+    <div *ngFor="let category of categories">
+        <div class="dm-sans-font">
+          <h1>{{ category | titlecase }}</h1>
+          <div class="slideshow">
             @for (video of list; track list) {
-            @if (video.category == 'documentary') {
-            <div class="thumbnail-container">
-                <img (click)="playVideo(video)" [src]="apiMediaUrl + video.thumbnail" [alt]="video.title">
-            </div>
+              @if (video.category == category) {
+                <div class="thumbnail-container">
+                  <img (click)="playVideo(video)" [src]="apiMediaUrl + video.thumbnail" [alt]="video.title">
+                </div>
+              }
             }
-            }
+          </div>
         </div>
-    </div>
+      </div>
 
-    <div class="crime dm-sans-font">
-        <h1>Crime</h1>
-        <div class="slideshow">
-            @for (video of list; track list) {
-            @if (video.category == 'crime') {
-            <div class="thumbnail-container">
-                <img (click)="playVideo(video)" [src]="apiMediaUrl + video.thumbnail" [alt]="video.title">
-            </div>
-            }
-            }
-        </div>
-    </div>
-
-    <div class="sports dm-sans-font">
-        <h1>Sports</h1>
-        <div class="slideshow">
-            @for (video of list; track list) {
-            @if (video.category == 'sports') {
-            <div class="thumbnail-container">
-                <img (click)="playVideo(video)" [src]="apiMediaUrl + video.thumbnail" [alt]="video.title">
-            </div>
-            }
-            }
-        </div>
-    </div>
-
-    <div class="romance dm-sans-font">
-        <h1>Romance</h1>
-        <div class="slideshow">
-            @for (video of list; track list) {
-            @if (video.category == 'romance') {
-            <div class="thumbnail-container">
-                <img (click)="playVideo(video)" [src]="apiMediaUrl + video.thumbnail" [alt]="video.title">
-            </div>
-            }
-            }
-        </div>
-    </div>
 </div>
