@@ -1,5 +1,7 @@
 <div class="main-container">
+    
     <div class="video-container">
+        
         <video #videoPlayer class="video-js vjs-default-skin"></video>
         <div class="quality-selector">
             <select id="quality" (change)="onQualityChange($event)">
@@ -11,3 +13,12 @@
         </div>
     </div>
 </div>
+
+<!-- <div>
+    <video #videoPlayer autoplay controls playsinline preload="auto">
+        <source [src]="videoSrc" type="video/mp4">
+    </video> 
+    <select (change)="onQualityChange($event)" [value]="selectedQuality">
+        <option *ngFor="let option of qualityOptions" [value]="option.label">{{ option.label }}</option>
+      </select>
+</div> -->

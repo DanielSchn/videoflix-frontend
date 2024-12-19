@@ -32,7 +32,7 @@ export class VideoplayerComponent {
   videoService = inject(VideoService);
   private apiMediaUrl = environment.API_BASE_URL;
 
-  @ViewChild('videoPlayer', { static: true }) videoPlayer!: ElementRef;
+  @ViewChild('videoPlayer', { static: false }) videoPlayer!: ElementRef;
   player: any;
 
   videoSource: Videolist = {
@@ -47,7 +47,10 @@ export class VideoplayerComponent {
   };
 
   qualityOptions: { label: string; src: string }[] = [];
+  videoContent: { title?: string, description?: string, video_file?: string, thumbnail?: string, created_at?: string } = {};
   selectedQuality: string = '720p';
+  videoSrc: string = '';
+  currentTimeBeforeQualityChange: number = 0;
 
 
   ngAfterViewInit(): void {
@@ -56,6 +59,17 @@ export class VideoplayerComponent {
       autoplay: false,
       preload: 'auto'
     });
+
+    const savedVideoData = this.getSavedVideoData();
+    if (savedVideoData && savedVideoData.videoName === this.videoSource.title) {
+      this.player.currentTime(savedVideoData.time);
+    }
+
+    this.player.on('timeupdate', () => {
+      const currentTime = this.player.currentTime();
+      this.saveVideoProgress(this.videoSource.title, currentTime);
+    });
+
     this.loadQuality(this.selectedQuality);
   }
 
@@ -63,27 +77,41 @@ export class VideoplayerComponent {
   loadQuality(label: string): void {
     const source = this.qualityOptions.find((option) => option.label === label);
     if (source) {
+      this.selectedQuality = label;
       this.player.src({ src: source.src, type: 'video/mp4' });
-      this.player.play();
+      this.player.one('loadeddata', () => {
+        this.player.currentTime(this.currentTimeBeforeQualityChange);
+        this.player.play();
+      });
     }
   }
 
 
   onQualityChange(event: any): void {
-    this.selectedQuality = event.target.value;
-    this.loadQuality(this.selectedQuality);
+    this.currentTimeBeforeQualityChange = this.player.currentTime();
+    this.loadQuality(event.target.value);
   }
 
 
   ngOnInit(): void {
     this.videoSource = this.videoService.getVideoSource();
-    console.log('SOURCE', this.videoSource);
-    console.log('480p', this.videoSource.video_480p);
     this.qualityOptions = [
       { label: '480p', src: this.apiMediaUrl + this.videoSource.video_480p },
       { label: '720p', src: this.apiMediaUrl + this.videoSource.video_720p },
       { label: '1080p', src: this.apiMediaUrl + this.videoSource.video_1080p }
     ].filter(option => option.src);
+  }
+
+
+  saveVideoProgress(videoName: string, time: number): void {
+    const videoData = { videoName, time };
+    localStorage.setItem('videoProgress', JSON.stringify(videoData));
+  }
+
+
+  getSavedVideoData(): { videoName: string; time: number } | null {
+    const savedData = localStorage.getItem('videoProgress');
+    return savedData ? JSON.parse(savedData) : null;
   }
 
 
