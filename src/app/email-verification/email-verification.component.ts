@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { ConstantsService } from '../constants.service';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../environments/environments';
 
 @Component({
   selector: 'app-email-verification',
@@ -21,8 +21,10 @@ export class EmailVerificationComponent {
   route = inject(ActivatedRoute);
   http = inject(HttpClient);
   router = inject(Router);
-  constants = inject(ConstantsService);
   toastr = inject(ToastrService);
+  private apiBaseUrl = environment.API_BASE_URL;
+  private toastPosition = environment.TOASTR_POSITION;
+  private toastTimeout = environment.TOASTR_TIMEOUT;
   
   verificationStatus: 'loading' | 'success' | 'error' = 'loading';
   errorMessage: string = '';
@@ -36,15 +38,15 @@ export class EmailVerificationComponent {
 
     if (uid && token) {
       this.http
-        .post(this.constants.API_BASE_URL + 'api/verify-email/', { uid, token })
+        .post(this.apiBaseUrl + 'api/verify-email/', { uid, token })
         .subscribe({
           next: (response: any) => {
             this.verificationStatus = 'success';
             this.errorMessage = '';
             this.message = response.message;
             this.toastr.success(this.message, 'Success', {
-              positionClass: this.constants.TOASTR_POSITION,
-              timeOut: this.constants.TOASTR_TIMEOUT
+              positionClass: this.toastPosition,
+              timeOut: this.toastTimeout
             });
           },
           error: (error) => {
@@ -52,8 +54,8 @@ export class EmailVerificationComponent {
             this.message = '';
             this.errorMessage = error.error?.error || 'Verification error!';
             this.toastr.error(this.errorMessage, 'Error', {
-              positionClass: this.constants.TOASTR_POSITION,
-              timeOut: this.constants.TOASTR_TIMEOUT
+              positionClass: this.toastPosition,
+              timeOut: this.toastTimeout
             });
           }
         });
@@ -61,8 +63,8 @@ export class EmailVerificationComponent {
       this.verificationStatus = 'error';
       this.errorMessage = 'Invalid link.';
       this.toastr.error(this.errorMessage, 'Error', {
-        positionClass: this.constants.TOASTR_POSITION,
-        timeOut: this.constants.TOASTR_TIMEOUT
+        positionClass: this.toastPosition,
+        timeOut: this.toastTimeout
       });
     }
     setTimeout(() => {

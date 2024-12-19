@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { EmailVerificationComponent } from './email-verification/email-verification.component';
 import { VideoService } from './video.service';
 
 @Component({

@@ -12,7 +12,7 @@
 
         <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" crossorigin autoplay muted loop
             oncanplay="this.play()" onloadedmetadata="this.muted = true">
-            <source [src]="mediaBaseUrl + list[randomNumber].video_720p" type="video/mp4">
+            <source [src]="apiMediaUrl + list[randomNumber].video_720p" type="video/mp4">
         </video>
     </vg-player>
 </div>

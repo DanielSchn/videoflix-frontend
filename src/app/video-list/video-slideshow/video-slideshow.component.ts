@@ -1,9 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { VideoService } from '../../video.service';
-import { ConstantsService } from '../../constants.service';
 import { CommonModule } from '@angular/common';
 import { Videolist } from '../../interfaces/videolist.interface';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environments';
+
 
 @Component({
   selector: 'app-video-slideshow',
@@ -17,11 +18,10 @@ import { Router } from '@angular/router';
 export class VideoSlideshowComponent {
 
   videoService = inject(VideoService);
-  constants = inject(ConstantsService);
-  router = inject(Router)
+  router = inject(Router);
+  apiMediaUrl = environment.API_MEDIA_URL;
 
   list: Videolist[] = [];
-  apiBaseUrl: string = this.constants.API_BASE_URL;
 
   constructor() { }
 

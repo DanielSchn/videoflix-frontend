@@ -1,12 +1,12 @@
 import { Component, inject, Input } from '@angular/core';
 import { VideoService } from '../../video.service';
-import { ConstantsService } from '../../constants.service';
 import { CommonModule } from '@angular/common';
 import {VgCoreModule} from '@videogular/ngx-videogular/core';
 import {VgControlsModule} from '@videogular/ngx-videogular/controls';
 import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
 import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
 import { Videolist } from '../../interfaces/videolist.interface';
+import { environment } from '../../../environments/environments';
 
 @Component({
   selector: 'app-preview-banner',
@@ -24,14 +24,11 @@ import { Videolist } from '../../interfaces/videolist.interface';
 export class PreviewBannerComponent {
 
   videoService = inject(VideoService);
-  constants = inject(ConstantsService);
+  apiMediaUrl = environment.API_MEDIA_URL;
   
   list: Videolist[] = [];
-  apiBaseUrl: string = this.constants.API_BASE_URL;
-  mediaBaseUrl: string = this.constants.API_MEDIA_URL;
   randomNumber: number = Math.floor(Math.random() * 7) + 1;
   
-
   constructor() {}
 
   ngOnInit(): void {

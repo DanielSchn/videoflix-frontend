@@ -4,9 +4,9 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { ConstantsService } from '../constants.service';
 import { ToastrService } from 'ngx-toastr';
 import { FooterComponent } from '../shared/footer/footer.component';
+import { environment } from '../../environments/environments';
 
 @Component({
   selector: 'app-signup',
@@ -25,9 +25,12 @@ import { FooterComponent } from '../shared/footer/footer.component';
 export class SignupComponent {
 
   http = inject(HttpClient);
-  constants = inject(ConstantsService);
   toastr = inject(ToastrService);
   router = inject(Router);
+  private apiBaseUrl = environment.API_BASE_URL;
+  private toastPosition = environment.TOASTR_POSITION;
+  private toastTimeout = environment.TOASTR_TIMEOUT;
+
 
   isPasswordMismatch: boolean = false;
   isButtonDisabled: boolean = true;
@@ -38,8 +41,8 @@ export class SignupComponent {
   email: string = '';
   message: string = '';
   error: string = '';
-  
-  constructor(){}
+
+  constructor() { }
 
 
 
@@ -49,19 +52,19 @@ export class SignupComponent {
       !!this.password.trim() &&
       !!this.confirmPassword.trim() &&
       this.password !== this.confirmPassword;
-  
+
     this.updateButtonStatus();
   }
 
   updateButtonStatus(): void {
     this.isButtonDisabled =
-      !this.password.trim() || 
-      !this.confirmPassword.trim() || 
+      !this.password.trim() ||
+      !this.confirmPassword.trim() ||
       this.isPasswordMismatch;
   }
 
   checkPasswordLength() {
-     return this.password.length <= 7;
+    return this.password.length <= 7;
   }
 
   togglePasswordVisibility() {
@@ -74,7 +77,7 @@ export class SignupComponent {
       return;
     } else {
       if (this.email && this.password) {
-        this.http.post(this.constants.API_BASE_URL + 'api/registration/', {
+        this.http.post(this.apiBaseUrl + 'api/registration/', {
           email: this.email,
           password: this.password,
           confirm_password: this.confirmPassword,
@@ -83,24 +86,24 @@ export class SignupComponent {
             this.message = response.message;
             this.error = '';
             this.toastr.success(this.message, 'Success', {
-              positionClass: this.constants.TOASTR_POSITION,
-              timeOut: this.constants.TOASTR_TIMEOUT
+              positionClass: this.toastPosition,
+              timeOut: this.toastTimeout
             });
           },
           error: (error) => {
             this.error = error.error?.error || 'Error creating account.';
             this.message = '';
             this.toastr.error(this.error, 'Error', {
-              positionClass: this.constants.TOASTR_POSITION,
-              timeOut: this.constants.TOASTR_TIMEOUT
+              positionClass: this.toastPosition,
+              timeOut: this.toastTimeout
             });
           },
         });
       } else {
         this.error = 'Invalid link.';
         this.toastr.error(this.error, 'Error', {
-          positionClass: this.constants.TOASTR_POSITION,
-          timeOut: this.constants.TOASTR_TIMEOUT
+          positionClass: this.toastPosition,
+          timeOut: this.toastTimeout
         });
       }
       setTimeout(() => {
@@ -108,5 +111,5 @@ export class SignupComponent {
       }, 3500);
     }
   }
-  
+
 }

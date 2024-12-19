@@ -5,7 +5,7 @@
         <div class="slideshow">
             @for (video of list; track list) {
             <div class="thumbnail-container">
-                <img (click)="playVideo(video)" [src]="constants.API_MEDIA_URL + video.thumbnail" [alt]="video.title">
+                <img (click)="playVideo(video)" [src]="apiMediaUrl + video.thumbnail" [alt]="video.title">
             </div>
             }
         </div>
@@ -17,7 +17,7 @@
             @for (video of list; track list) {
             @if (video.category == 'documentary') {
             <div class="thumbnail-container">
-                <img (click)="playVideo(video)" [src]="constants.API_MEDIA_URL + video.thumbnail" [alt]="video.title">
+                <img (click)="playVideo(video)" [src]="apiMediaUrl + video.thumbnail" [alt]="video.title">
             </div>
             }
             }
@@ -30,7 +30,7 @@
             @for (video of list; track list) {
             @if (video.category == 'crime') {
             <div class="thumbnail-container">
-                <img (click)="playVideo(video)" [src]="constants.API_MEDIA_URL + video.thumbnail" [alt]="video.title">
+                <img (click)="playVideo(video)" [src]="apiMediaUrl + video.thumbnail" [alt]="video.title">
             </div>
             }
             }
@@ -43,7 +43,7 @@
             @for (video of list; track list) {
             @if (video.category == 'sports') {
             <div class="thumbnail-container">
-                <img (click)="playVideo(video)" [src]="constants.API_MEDIA_URL + video.thumbnail" [alt]="video.title">
+                <img (click)="playVideo(video)" [src]="apiMediaUrl + video.thumbnail" [alt]="video.title">
             </div>
             }
             }
@@ -56,7 +56,7 @@
             @for (video of list; track list) {
             @if (video.category == 'romance') {
             <div class="thumbnail-container">
-                <img (click)="playVideo(video)" [src]="constants.API_MEDIA_URL + video.thumbnail" [alt]="video.title">
+                <img (click)="playVideo(video)" [src]="apiMediaUrl + video.thumbnail" [alt]="video.title">
             </div>
             }
             }
