@@ -1,0 +1,42 @@
+@import '../../mixin.scss';
+
+* {
+    font-family: 'DM Sans', Arial, sans-serif;
+    color: $white;
+    background-color: $black;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    background-color: $black;
+    height: 100%;
+}
+
+.site-container {
+    padding: 0 64px;
+}
+
+header {
+    min-height: 128px;
+    @include dFlex();
+
+    >img {
+        width: 200px;
+        cursor: pointer;
+    }
+}
+
+a:hover {
+    color: $purpleHover;
+}
+
+h1 {
+    margin-top: 0;
+}
+
+@media (max-width: 600px) {
+    .site-container {
+        padding: 0 16px;
+    }
+}

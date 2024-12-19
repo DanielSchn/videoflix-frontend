@@ -9,6 +9,7 @@
     font-size: 14px;
     @include dFlex();
     gap: 32px;
+    background-color: $black;
 
     a {
         text-decoration: none;
