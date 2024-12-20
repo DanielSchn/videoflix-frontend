@@ -19,21 +19,32 @@ export class HeaderComponent {
   loginPage: boolean = false;
   url: string | null = '';
   videoListSite: boolean = false;
+  signupSite: boolean = false;
+  landingSite: boolean = false;
 
   constructor(){}
 
   ngOnInit() {
     this.url = this.router.url;
-    if (this.url.includes('login') || this.url.includes('landing')) {
+  
+    this.loginPage = this.videoListSite = this.signupSite = this.landingSite = false;
+  
+    if (this.url.includes('login')) {
       this.loginPage = true;
-      this.videoListSite = false;
-    } else {
-      if (this.url.includes('video-list')) {
-        this.videoListSite = true;
-      } 
-      this.loginPage = false;
+    } else if (this.url.includes('landing')) {
+      this.landingSite = true;
+    } else if (this.url.includes('video-list')) {
+      this.videoListSite = true;
+    } else if (this.url.includes('sign-up')) {
+      this.signupSite = true;
     }
+
+    console.log('LOGIN', this.loginPage);
+    console.log('video', this.videoListSite);
+    console.log('signup', this.signupSite);
+    console.log('landing', this.landingSite);
   }
+
 
   logout() {
     localStorage.removeItem('token');

@@ -26,7 +26,8 @@
 
     h1 {
         font-weight: 700;
-        font-size: 48px;
+        // font-size: 48px;
+        font-size: clamp(2rem, 1.8rem + 1vw, 3rem);
         color: $white;
         text-align: center;
     }
@@ -35,12 +36,14 @@
         text-align: center;
         font-weight: 700;
         color: $white;
+        font-size: clamp(1.125rem, 1.05rem + 0.375vw, 1.5rem);
     }
 
     p {
         color: $white;
         text-align: center;
         margin: 0;
+        font-size: clamp(1rem, 0.925rem + 0.375vw, 1.375rem);
     }
 }
 
@@ -63,4 +66,17 @@ button {
 
 app-footer {
     margin-top: auto;
+}
+
+
+@media (max-width: 650px) {
+    .landing-container {
+        padding: 0 24px;
+    }
+}
+
+@media (max-width: 450px) {
+    .login {
+        display: none;
+    }
 }

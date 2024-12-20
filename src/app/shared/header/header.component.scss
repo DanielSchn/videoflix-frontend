@@ -71,3 +71,23 @@ header {
     }
 
 }
+
+.responsive-button {
+    display: none;
+}
+
+@media (max-width: 450px) {
+    .responsive-button {
+        display: flex;
+    }
+
+    header {
+        padding: 0 16px;
+    }
+}
+
+@media (max-width: 450px) {
+    .logo {
+        width: 128px;
+    }
+}
