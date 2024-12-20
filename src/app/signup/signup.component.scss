@@ -120,3 +120,14 @@ form {
     font-size: 18px;
     padding-left: 16px;
 }
+
+@media (max-width: 550px) {
+    .input-container {
+        scale: 0.8;
+        height: 400px;
+    }
+
+    form {
+        gap: 18px;
+    }
+}

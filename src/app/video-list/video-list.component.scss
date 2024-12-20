@@ -38,3 +38,34 @@ app-video-slideshow {
     z-index: 1;
     position: relative;
 }
+
+@media (max-width: 1250px) {
+    app-video-slideshow {
+        margin-top: -55px;
+    }
+
+}
+
+@media (max-width: 1075px) {
+    app-video-slideshow {
+        margin-top: -20px;
+    }
+
+}
+
+@media (max-width: 940px) {
+    app-video-slideshow {
+        margin-top: 20px;
+    }
+}
+
+
+@media (max-width: 750px) {
+    app-preview-banner {
+        display: none;
+    }
+
+    app-video-slideshow {
+        margin-top: 0;
+    }
+}

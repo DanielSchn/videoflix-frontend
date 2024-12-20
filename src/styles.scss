@@ -65,7 +65,7 @@ html{
 }
 
 @media (max-width: 450px) {
-  html{
+  html, * {
     scrollbar-width: none;
   }
 }

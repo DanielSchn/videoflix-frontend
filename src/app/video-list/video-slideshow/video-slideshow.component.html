@@ -1,6 +1,6 @@
 <div class="main-container">
 
-    <div class="dm-sans-font">
+    <div class="slide dm-sans-font">
         <h1>New on Videoflix</h1>
         <div class="slideshow">
             @for (video of list; track list) {
@@ -12,7 +12,7 @@
     </div>
 
     <div *ngFor="let category of categories">
-        <div class="dm-sans-font">
+        <div class="slide dm-sans-font">
           <h1>{{ category | titlecase }}</h1>
           <div class="slideshow">
             @for (video of list; track list) {
