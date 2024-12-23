@@ -30,7 +30,7 @@ import { environment } from '../../environments/environments';
 export class VideoplayerComponent {
   router = inject(Router);
   videoService = inject(VideoService);
-  private apiMediaUrl = environment.API_BASE_URL;
+  private apiMediaUrl = environment.API_MEDIA_URL;
 
   @ViewChild('videoPlayer', { static: false }) videoPlayer!: ElementRef;
   player: any;
