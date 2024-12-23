@@ -1,10 +1,9 @@
-import { Component, ElementRef, inject, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, Input, ViewChild } from '@angular/core';
 import { VgCoreModule } from '@videogular/ngx-videogular/core';
 import { VgControlsModule } from '@videogular/ngx-videogular/controls';
 import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
 import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 import { VgStreamingModule } from '@videogular/ngx-videogular/streaming';
-import videojs from 'video.js';
 import { Router } from '@angular/router';
 import { VideoService } from '../video.service';
 import { Videolist } from '../interfaces/videolist.interface';
@@ -31,7 +30,7 @@ import { HeaderComponent } from '../shared/header/header.component';
 export class VideoplayerComponent {
   router = inject(Router);
   videoService = inject(VideoService);
-  private apiMediaUrl = environment.API_MEDIA_URL;
+  apiMediaUrl = environment.API_MEDIA_URL;
 
   @ViewChild('videoPlayer', { static: false }) videoPlayer!: ElementRef;
   player: any;
@@ -52,45 +51,58 @@ export class VideoplayerComponent {
   selectedQuality: string = '720p';
   videoSrc: string = '';
   currentTimeBeforeQualityChange: number = 0;
+  screenWidth: number = 0;
 
-
-  ngAfterViewInit(): void {
-    this.player = videojs(this.videoPlayer.nativeElement, {
-      controls: true,
-      autoplay: false,
-      preload: 'auto'
-    });
-
-    const savedVideoData = this.getSavedVideoData();
-    if (savedVideoData && savedVideoData.videoName === this.videoSource.title) {
-      this.player.currentTime(savedVideoData.time);
-    }
-
-    this.player.on('timeupdate', () => {
-      const currentTime = this.player.currentTime();
-      this.saveVideoProgress(this.videoSource.title, currentTime);
-    });
-
-    this.loadQuality(this.selectedQuality);
+  constructor() {
+    this.screenWidth = window.innerWidth;
   }
 
-
-  loadQuality(label: string): void {
-    const source = this.qualityOptions.find((option) => option.label === label);
-    if (source) {
-      this.selectedQuality = label;
-      this.player.src({ src: source.src, type: 'video/mp4' });
-      this.player.one('loadeddata', () => {
-        this.player.currentTime(this.currentTimeBeforeQualityChange);
-        this.player.play();
+  ngAfterViewInit(): void {
+    if (this.videoPlayer && this.videoPlayer.nativeElement) {
+      this.updateVideoSource(this.selectedQuality);
+      
+      this.videoPlayer.nativeElement.addEventListener('loadedmetadata', () => {
+        this.loadVideoProgress();
       });
+
+      this.videoPlayer.nativeElement.addEventListener('pause', () => {
+        this.saveVideoProgress();
+      });
+
+      this.videoPlayer.nativeElement.addEventListener('ended', () => {
+        this.saveVideoProgress();
+      });
+
+      window.addEventListener('beforeunload', () => {
+        this.saveVideoProgress();
+      });
+
+      setTimeout(() => {
+        this.videoPlayer.nativeElement.addEventListener('timeupdate', () => {
+          this.saveVideoProgress();
+        });
+      }, 1500);
+      
     }
   }
 
 
   onQualityChange(event: any): void {
-    this.currentTimeBeforeQualityChange = this.player.currentTime();
-    this.loadQuality(event.target.value);
+    this.currentTimeBeforeQualityChange = this.getCurrentTime();
+    this.selectedQuality = event.target.value; 
+    this.updateVideoSource(this.selectedQuality);
+  }
+
+  updateVideoSource(quality: string): void {
+    const selectedOption = this.qualityOptions.find(option => option.label === quality);
+    if (selectedOption) {
+      this.videoSrc = selectedOption.src;
+
+      if (this.videoPlayer && this.videoPlayer.nativeElement) {
+        this.videoPlayer.nativeElement.src = this.videoSrc;
+        this.videoPlayer.nativeElement.load(); 
+      }
+    }
   }
 
 
@@ -101,20 +113,50 @@ export class VideoplayerComponent {
       { label: '720p', src: this.apiMediaUrl + this.videoSource.video_720p },
       { label: '1080p', src: this.apiMediaUrl + this.videoSource.video_1080p }
     ].filter(option => option.src);
+
+    this.updateVideoSource(this.selectedQuality);
+    this.updateScreenWidth();
+    this.loadVideoProgress();
   }
 
 
-  saveVideoProgress(videoName: string, time: number): void {
-    const videoData = { videoName, time };
-    localStorage.setItem('videoProgress', JSON.stringify(videoData));
+  saveVideoProgress(): void {
+    if (this.videoPlayer && this.videoPlayer.nativeElement) {
+      const currentTime = this.videoPlayer.nativeElement.currentTime;
+      const videoData = { videoName: this.videoSource.title, time: currentTime };
+      localStorage.setItem('videoProgress', JSON.stringify(videoData));
+    }
   }
 
-
-  getSavedVideoData(): { videoName: string; time: number } | null {
+  loadVideoProgress(): void {
     const savedData = localStorage.getItem('videoProgress');
-    return savedData ? JSON.parse(savedData) : null;
+    if (savedData) {
+      const videoData = JSON.parse(savedData);
+      if (videoData.videoName === this.videoSource.title) {
+        this.currentTimeBeforeQualityChange = videoData.time;
+        if (this.videoPlayer && this.videoPlayer.nativeElement) {
+          this.videoPlayer.nativeElement.currentTime = this.currentTimeBeforeQualityChange;
+        }
+      }
+    }
   }
 
+  getCurrentTime(): number {
+    if (this.videoPlayer && this.videoPlayer.nativeElement) {
+      return this.videoPlayer.nativeElement.currentTime;
+    }
+    return 0;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.updateScreenWidth();
+  }
+
+  private updateScreenWidth(): void {
+    this.screenWidth = window.innerWidth;
+    console.log('Aktuelle Bildschirmbreite:', this.screenWidth);
+  }
 
   ngOnDestroy(): void {
     if (this.player) {

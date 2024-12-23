@@ -2,7 +2,9 @@
     <app-header></app-header>
     <div class="video-container">
         <h1>{{ videoSource.title }}</h1>
-        <video #videoPlayer class="video-js vjs-default-skin"></video>
+        <video #videoPlayer autoplay controls playsinline preload="auto">
+            <source [src]="videoSrc" type="video/mp4">
+        </video> 
         <div class="quality-selector">
             <select id="quality" (change)="onQualityChange($event)">
                 <option *ngFor="let option of qualityOptions" [value]="option.label"
