@@ -10,8 +10,8 @@ import { VideoService } from '../video.service';
 import { Videolist } from '../interfaces/videolist.interface';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../environments/environments';
+import { HeaderComponent } from '../shared/header/header.component';
 
-// import {SingleMediaPlayer} from './single-media-player';
 
 @Component({
   selector: 'app-videoplayer',
@@ -22,7 +22,8 @@ import { environment } from '../../environments/environments';
     VgOverlayPlayModule,
     VgBufferingModule,
     VgStreamingModule,
-    CommonModule
+    CommonModule,
+    HeaderComponent
   ],
   templateUrl: './videoplayer.component.html',
   styleUrl: './videoplayer.component.scss'

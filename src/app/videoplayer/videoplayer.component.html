@@ -1,7 +1,7 @@
 <div class="main-container">
-    
+    <app-header></app-header>
     <div class="video-container">
-        
+        <h1>{{ videoSource.title }}</h1>
         <video #videoPlayer class="video-js vjs-default-skin"></video>
         <div class="quality-selector">
             <select id="quality" (change)="onQualityChange($event)">
@@ -11,6 +11,10 @@
                 </option>
             </select>
         </div>
+    </div>
+    <div class="description-container">
+        <h2>About the film</h2>
+        <p>{{ videoSource.description }}</p>
     </div>
 </div>
 

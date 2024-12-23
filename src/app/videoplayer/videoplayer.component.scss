@@ -3,8 +3,10 @@
 .main-container {
     width: 100vw;
     height: 100vh;
-    @include dFlex();
+    display: flex;
+    align-items: center;
     background-color: $black;
+    flex-direction: column;
 }
 
 .video-container {
@@ -38,6 +40,15 @@ select {
 
 .video-js {
     max-width: 75vw;
+    display: flex;
+    justify-content: center;
+}
+
+h1,
+p,
+h2 {
+    color: $white;
+    font-family: $montFont;
 }
 
 @media (max-width: 600px) {

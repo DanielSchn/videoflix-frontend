@@ -21,6 +21,7 @@ export class HeaderComponent {
   videoListSite: boolean = false;
   signupSite: boolean = false;
   landingSite: boolean = false;
+  videoPlayer: boolean = false;
 
   constructor(){}
 
@@ -37,6 +38,8 @@ export class HeaderComponent {
       this.videoListSite = true;
     } else if (this.url.includes('sign-up')) {
       this.signupSite = true;
+    } else if (this.url.includes('video-player')) {
+      this.videoPlayer = true;
     }
 
     console.log('LOGIN', this.loginPage);

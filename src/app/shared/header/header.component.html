@@ -1,6 +1,6 @@
 <header *ngIf="!videoListSite">
     <img routerLink="/" class="logo" src="./assets/img/logo.png" alt="logo">
-    <div routerLink="/login" *ngIf="!loginPage && !landingSite && !signupSite && !videoListSite" class="login-button-header">
+    <div routerLink="/login" *ngIf="!loginPage && !landingSite && !signupSite && !videoListSite && !videoPlayer" class="login-button-header">
         <a routerLink="/login">Log in</a>
     </div>
     <div routerLink="/login" *ngIf="landingSite" class="login-button-header responsive-button">
@@ -8,6 +8,9 @@
     </div>
     <div routerLink="/login" *ngIf="signupSite" class="login-button-header">
         <a routerLink="/login">Log in</a>
+    </div>
+    <div routerLink="/login" *ngIf="videoPlayer">
+        <img class="back-arrow" routerLink="/video-list" src="./assets/icons/arrow_back.png" alt="back">
     </div>
 </header>
 <header *ngIf="videoListSite">
