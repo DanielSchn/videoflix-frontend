@@ -63,7 +63,7 @@ export class VideoplayerComponent {
       this.updateVideoSource(this.selectedQuality);
 
       this.videoPlayer.nativeElement.addEventListener('loadedmetadata', () => {
-        this.loadVideoProgress();
+        this.getVideoProgress();
       });
 
       this.videoPlayer.nativeElement.addEventListener('pause', () => {
@@ -117,7 +117,7 @@ export class VideoplayerComponent {
     this.selectVideoQualityByScreenWidth();
     this.updateVideoSource(this.selectedQuality);
     this.updateScreenWidth();
-    this.loadVideoProgress();
+    this.getVideoProgress();
   }
 
 
@@ -133,11 +133,6 @@ export class VideoplayerComponent {
 
 
   saveVideoProgress(): void {
-    // if (this.videoPlayer && this.videoPlayer.nativeElement) {
-    //   const currentTime = this.videoPlayer.nativeElement.currentTime;
-    //   const savedData = { videoName: this.videoSource.title, time: currentTime };
-    //   localStorage.setItem(this.videoSource.title, JSON.stringify(savedData));
-    // }
     const currentTime = this.videoPlayer.nativeElement.currentTime;
     this.videoService.setVideoProgress(currentTime).subscribe({
       next: () => console.log('Progress saved.'),
@@ -146,25 +141,17 @@ export class VideoplayerComponent {
   }
 
 
-  loadVideoProgress(): void {
-    // const savedData = localStorage.getItem(this.videoSource.title);
-    // if (savedData) {
-    //   const videoData = JSON.parse(savedData);
-    //   console.log('videoData',videoData.videoName);
-      
-    //   if (videoData.videoName === this.videoSource.title) {
-    //     this.currentTimeBeforeQualityChange = videoData.time;
-    //     if (this.videoPlayer && this.videoPlayer.nativeElement) {
-    //       this.videoPlayer.nativeElement.currentTime = this.currentTimeBeforeQualityChange;
-    //     }
-    //   }
-    // }
+  getVideoProgress(): void {
     this.videoService.loadVideoProgress().subscribe({
       next: (data) => {
-        if (data && data.length > 0) {
-          const savedProgress = data[0].current_time;
+        if (data && data.current_time !== undefined) {
+          const savedProgress = data.current_time;
+          console.log('SAVED', savedProgress);
+          this.videoPlayer.nativeElement.currentTime = 0;
           this.videoPlayer.nativeElement.currentTime = savedProgress;
           console.log('Progress loaded:', savedProgress);
+        } else {
+          this.videoPlayer.nativeElement.currentTime = 0;
         }
       },
       error: (err) => console.error('Error loading progress:', err),

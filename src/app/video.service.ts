@@ -28,7 +28,8 @@ export class VideoService {
 
 
   fetchList(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiBaseUrl + 'api/video/').pipe(
+    const headers = this.setHeader();
+    return this.http.get<any[]>(this.apiBaseUrl + 'api/video/', { headers }).pipe(
       tap((data) => this.listSubject.next(data))
     );
   }
@@ -88,8 +89,9 @@ export class VideoService {
 
   loadVideoProgress(): Observable<any> {
     const headers = this.setHeader();
+    const params = { video_name: this.videoSource.title };
     return this.http
-      .get<any[]>(`${this.apiBaseUrl}api/video-progress/?video_name=${this.videoSource.title}`, { headers })
+      .get<any[]>(`${this.apiBaseUrl}api/video-progress/get_user_progress/`, { headers, params })
       .pipe(
         tap((data) => {
           if (data && data.length > 0) {
@@ -116,7 +118,7 @@ export class VideoService {
     return token;
   }
 
-  
+
   private setHeader(): { Authorization: string } {
     const token = this.getAuthToken();
     return { Authorization: `Token ${token}` };
