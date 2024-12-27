@@ -19,10 +19,8 @@ video {
     margin: 0 auto;
     position: relative;
     width: 75%;
-    // height: 50vw;
     @include dFlex();
     flex-direction: column;
-    // aspect-ratio: 16 / 9;
 }
 
 video.video-js {
@@ -33,13 +31,6 @@ video.video-js {
     object-fit: contain;
     background-color: $black;
 }
-
-// video.vjs-control-bar,
-// .video-js .vjs-control-bar {
-//     width: 100% !important;
-//     position: relative !important;
-//     margin: 0 auto !important;
-// }
 
 .quality-selector {
     margin-top: 10px;
@@ -52,60 +43,12 @@ select {
     font-size: 14px;
 }
 
-// .video-js {
-//     max-width: 75vw;
-//     display: flex;
-//     justify-content: center;
-// }
-
 h1,
 p,
 h2 {
     color: $white;
     font-family: $montFont;
 }
-
-// @media (max-width: 1945px) {
-//     .video-container {
-//         scale: 0.9;
-//     }
-// }
-
-// @media (max-width: 1760px) {
-//     .video-container {
-//         scale: 0.8;
-//     }
-// }
-
-// @media (max-width: 1560px) {
-//     .video-container {
-//         scale: 0.7;
-//     }
-// }
-
-// @media (max-width: 1365px) {
-//     .video-container {
-//         scale: 0.6;
-//     }
-// }
-
-// @media (max-width: 1170px) {
-//     .video-container {
-//         scale: 0.5;
-//     }
-// }
-
-// @media (max-width: 980px) {
-//     .video-container {
-//         scale: 0.4;
-//     }
-// }
-
-// @media (max-width: 785px) {
-//     .video-container {
-//         scale: 0.3;
-//     }
-// }
 
 @media (max-width: 600px) {
     // .video-js {

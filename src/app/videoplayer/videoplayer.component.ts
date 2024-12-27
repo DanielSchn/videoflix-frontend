@@ -57,10 +57,11 @@ export class VideoplayerComponent {
     this.screenWidth = window.innerWidth;
   }
 
+
   ngAfterViewInit(): void {
     if (this.videoPlayer && this.videoPlayer.nativeElement) {
       this.updateVideoSource(this.selectedQuality);
-      
+
       this.videoPlayer.nativeElement.addEventListener('loadedmetadata', () => {
         this.loadVideoProgress();
       });
@@ -82,25 +83,25 @@ export class VideoplayerComponent {
           this.saveVideoProgress();
         });
       }, 1500);
-      
+
     }
   }
 
 
   onQualityChange(event: any): void {
     this.currentTimeBeforeQualityChange = this.getCurrentTime();
-    this.selectedQuality = event.target.value; 
+    this.selectedQuality = event.target.value;
     this.updateVideoSource(this.selectedQuality);
   }
+
 
   updateVideoSource(quality: string): void {
     const selectedOption = this.qualityOptions.find(option => option.label === quality);
     if (selectedOption) {
       this.videoSrc = selectedOption.src;
-
       if (this.videoPlayer && this.videoPlayer.nativeElement) {
         this.videoPlayer.nativeElement.src = this.videoSrc;
-        this.videoPlayer.nativeElement.load(); 
+        this.videoPlayer.nativeElement.load();
       }
     }
   }
@@ -113,33 +114,63 @@ export class VideoplayerComponent {
       { label: '720p', src: this.apiMediaUrl + this.videoSource.video_720p },
       { label: '1080p', src: this.apiMediaUrl + this.videoSource.video_1080p }
     ].filter(option => option.src);
-
+    this.selectVideoQualityByScreenWidth();
     this.updateVideoSource(this.selectedQuality);
     this.updateScreenWidth();
     this.loadVideoProgress();
   }
 
 
-  saveVideoProgress(): void {
-    if (this.videoPlayer && this.videoPlayer.nativeElement) {
-      const currentTime = this.videoPlayer.nativeElement.currentTime;
-      const videoData = { videoName: this.videoSource.title, time: currentTime };
-      localStorage.setItem('videoProgress', JSON.stringify(videoData));
+  selectVideoQualityByScreenWidth(): void {
+    if (this.screenWidth < 720) {
+      this.selectedQuality = '480p';
+    } else if (this.screenWidth < 1080) {
+      this.selectedQuality = '720p';
+    } else {
+      this.selectedQuality = '1080p';
     }
   }
 
-  loadVideoProgress(): void {
-    const savedData = localStorage.getItem('videoProgress');
-    if (savedData) {
-      const videoData = JSON.parse(savedData);
-      if (videoData.videoName === this.videoSource.title) {
-        this.currentTimeBeforeQualityChange = videoData.time;
-        if (this.videoPlayer && this.videoPlayer.nativeElement) {
-          this.videoPlayer.nativeElement.currentTime = this.currentTimeBeforeQualityChange;
-        }
-      }
-    }
+
+  saveVideoProgress(): void {
+    // if (this.videoPlayer && this.videoPlayer.nativeElement) {
+    //   const currentTime = this.videoPlayer.nativeElement.currentTime;
+    //   const savedData = { videoName: this.videoSource.title, time: currentTime };
+    //   localStorage.setItem(this.videoSource.title, JSON.stringify(savedData));
+    // }
+    const currentTime = this.videoPlayer.nativeElement.currentTime;
+    this.videoService.setVideoProgress(currentTime).subscribe({
+      next: () => console.log('Progress saved.'),
+      error: (err) => console.error('Error saving progress:', err),
+    });
   }
+
+
+  loadVideoProgress(): void {
+    // const savedData = localStorage.getItem(this.videoSource.title);
+    // if (savedData) {
+    //   const videoData = JSON.parse(savedData);
+    //   console.log('videoData',videoData.videoName);
+      
+    //   if (videoData.videoName === this.videoSource.title) {
+    //     this.currentTimeBeforeQualityChange = videoData.time;
+    //     if (this.videoPlayer && this.videoPlayer.nativeElement) {
+    //       this.videoPlayer.nativeElement.currentTime = this.currentTimeBeforeQualityChange;
+    //     }
+    //   }
+    // }
+    this.videoService.loadVideoProgress().subscribe({
+      next: (data) => {
+        if (data && data.length > 0) {
+          const savedProgress = data[0].current_time;
+          this.videoPlayer.nativeElement.currentTime = savedProgress;
+          console.log('Progress loaded:', savedProgress);
+        }
+      },
+      error: (err) => console.error('Error loading progress:', err),
+    });
+  }
+
 
   getCurrentTime(): number {
     if (this.videoPlayer && this.videoPlayer.nativeElement) {
@@ -148,15 +179,18 @@ export class VideoplayerComponent {
     return 0;
   }
 
+
   @HostListener('window:resize', ['$event'])
   onResize(event: Event): void {
     this.updateScreenWidth();
   }
 
+
   private updateScreenWidth(): void {
     this.screenWidth = window.innerWidth;
     console.log('Aktuelle Bildschirmbreite:', this.screenWidth);
   }
+
 
   ngOnDestroy(): void {
     if (this.player) {
