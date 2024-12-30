@@ -7,6 +7,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { FooterComponent } from '../shared/footer/footer.component';
 import { environment } from '../../environments/environments';
+import { VideoService } from '../video.service';
 
 @Component({
   selector: 'app-login',
@@ -27,6 +28,7 @@ export class LoginComponent {
   http = inject(HttpClient);
   toastr = inject(ToastrService);
   router = inject(Router);
+  videoService = inject(VideoService);
   private apiBaseUrl = environment.API_BASE_URL;
   private toastPosition = environment.TOASTR_POSITION;
   private toastTimeout = environment.TOASTR_TIMEOUT;
@@ -61,12 +63,12 @@ export class LoginComponent {
             positionClass: this.toastPosition,
             timeOut: this.toastTimeout
           });
-
           if (this.rememberMe) {
             localStorage.setItem('token', token);
           } else {
             sessionStorage.setItem('token', token);
           }
+          this.loadVideos();
           setTimeout(() => {
             this.router.navigate(['/video-list']);
           }, 2000);
@@ -87,6 +89,13 @@ export class LoginComponent {
         timeOut: this.toastTimeout
       });
     }
+  }
+
+
+  private loadVideos(): void {
+    this.videoService.fetchList().subscribe(() => {
+      console.log('Videos loaded!');
+    });
   }
 
 

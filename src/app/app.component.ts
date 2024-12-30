@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { VideoService } from './video.service';
 
 @Component({
@@ -15,14 +15,20 @@ import { VideoService } from './video.service';
 export class AppComponent {
   title = 'videoflix';
   videoService = inject(VideoService);
+  router = inject(Router);
 
   constructor() {
     this.loadVideos();
   }
 
   private loadVideos(): void {
-    this.videoService.fetchList().subscribe(() => {
-      console.log('Videos loaded!');
-    });
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    if (token) {
+      this.videoService.fetchList().subscribe(() => {
+        console.log('Videos loaded!');
+      });
+      this.router.navigate(['/video-list']);
+    }
+    
   }
 }

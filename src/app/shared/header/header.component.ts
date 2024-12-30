@@ -22,11 +22,21 @@ export class HeaderComponent {
   signupSite: boolean = false;
   landingSite: boolean = false;
   videoPlayer: boolean = false;
+  loggedIn: boolean = false;
 
   constructor(){}
 
   ngOnInit() {
     this.url = this.router.url;
+
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+
+    if (token) {
+      this.loggedIn = true;
+      this.router.navigate(['/video-list']);
+    } else {
+      this.loggedIn = false;
+    }
   
     this.loginPage = this.videoListSite = this.signupSite = this.landingSite = false;
   
@@ -46,11 +56,13 @@ export class HeaderComponent {
     console.log('video', this.videoListSite);
     console.log('signup', this.signupSite);
     console.log('landing', this.landingSite);
+    console.log('loggedIn', this.loggedIn);
   }
 
 
   logout() {
     localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     setTimeout(() => {
       this.router.navigate(['/']);  
     }, 500);

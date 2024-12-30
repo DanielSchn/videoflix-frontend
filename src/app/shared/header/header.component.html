@@ -12,6 +12,9 @@
     <div routerLink="/login" *ngIf="videoPlayer">
         <img class="back-arrow" routerLink="/video-list" src="./assets/icons/arrow_back.png" alt="back">
     </div>
+    <div routerLink="/login" *ngIf="loggedIn" class="login-button-header">
+        <a routerLink="/login">Video list</a>
+    </div>
 </header>
 <header *ngIf="videoListSite">
     <img routerLink="/" class="only-logo" src="./assets/img/vf_only_icon.png" alt="logo">
