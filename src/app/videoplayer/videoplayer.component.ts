@@ -10,6 +10,7 @@ import { Videolist } from '../interfaces/videolist.interface';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../environments/environments';
 import { HeaderComponent } from '../shared/header/header.component';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -30,7 +31,10 @@ import { HeaderComponent } from '../shared/header/header.component';
 export class VideoplayerComponent {
   router = inject(Router);
   videoService = inject(VideoService);
+  toastr = inject(ToastrService);
   apiMediaUrl = environment.API_MEDIA_URL;
+  private toastPosition = environment.TOASTR_POSITION;
+  private toastTimeout = environment.TOASTR_TIMEOUT;
 
   @ViewChild('videoPlayer', { static: false }) videoPlayer!: ElementRef;
   player: any;
@@ -89,6 +93,10 @@ export class VideoplayerComponent {
 
 
   onQualityChange(event: any): void {
+    this.toastr.success(event.target.value, 'Change Quality to:', {
+      positionClass: this.toastPosition,
+      timeOut: this.toastTimeout
+    });
     this.currentTimeBeforeQualityChange = this.getCurrentTime();
     this.selectedQuality = event.target.value;
     this.updateVideoSource(this.selectedQuality);
