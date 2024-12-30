@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { VideoService } from '../../video.service';
+import { VideoService } from '../../service/video.service';
 import { CommonModule } from '@angular/common';
 import { Videolist } from '../../interfaces/videolist.interface';
 import { Router } from '@angular/router';

@@ -4,7 +4,7 @@ import { PreviewBannerComponent } from './preview-banner/preview-banner.componen
 import { VideoSlideshowComponent } from './video-slideshow/video-slideshow.component';
 import { FooterComponent } from '../shared/footer/footer.component';
 import { HeaderComponent } from '../shared/header/header.component';
-import { VideoService } from '../video.service';
+import { VideoService } from '../service/video.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';

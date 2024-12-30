@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, of, switchMap, tap } from 'rxjs';
-import { Videolist } from './interfaces/videolist.interface';
-import { environment } from '../environments/environments';
+import { Videolist } from '../interfaces/videolist.interface';
+import { environment } from '../../environments/environments';
 
 @Injectable({
   providedIn: 'root'

@@ -5,7 +5,7 @@ import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
 import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 import { VgStreamingModule } from '@videogular/ngx-videogular/streaming';
 import { Router } from '@angular/router';
-import { VideoService } from '../video.service';
+import { VideoService } from '../service/video.service';
 import { Videolist } from '../interfaces/videolist.interface';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../environments/environments';

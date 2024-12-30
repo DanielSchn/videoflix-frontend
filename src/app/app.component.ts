@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { VideoService } from './video.service';
+import { VideoService } from './service/video.service';
 
 @Component({
   selector: 'app-root',

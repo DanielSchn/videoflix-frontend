@@ -1,5 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
-import { VideoService } from '../../video.service';
+import { VideoService } from '../../service/video.service';
 import { CommonModule } from '@angular/common';
 import {VgCoreModule} from '@videogular/ngx-videogular/core';
 import {VgControlsModule} from '@videogular/ngx-videogular/controls';

@@ -7,7 +7,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { FooterComponent } from '../shared/footer/footer.component';
 import { environment } from '../../environments/environments';
-import { VideoService } from '../video.service';
+import { VideoService } from '../service/video.service';
 
 @Component({
   selector: 'app-login',
