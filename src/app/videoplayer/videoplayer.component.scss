@@ -50,16 +50,8 @@ h2 {
     font-family: $montFont;
 }
 
-@media (max-width: 600px) {
-    // .video-js {
-    //     max-width: 100vw;
-    // }
-
-    // .video-container {
-    //     height: 70vw;
-    // }
-
-    // video.video-js {
-    //     width: 100%;
-    // }
+@media (max-width: 1000px) {
+    .description-container {
+        padding: 0 16px;
+    }
 }
