@@ -1,8 +1,9 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from './auth.service';
+import { map, Observable } from 'rxjs';
 
-export const authGuard: CanActivateFn = (route, state) => {
+export const authGuard: CanActivateFn = (route, state): Observable<boolean | import('@angular/router').UrlTree> => {
   /**
   * Guard function to protect routes from unauthenticated access.
   * @param route - The activated route snapshot.
@@ -11,12 +12,16 @@ export const authGuard: CanActivateFn = (route, state) => {
   */
   const router = inject(Router);
   const authService = inject(AuthService);
-  const isAuthenticated = authService.isAuthenticated();
+  // const isAuthenticated = authService.isAuthenticated();
 
-  if (isAuthenticated) {
-    return true;
-  } else {
-    return router.createUrlTree(['/login']);
-  }
+  return authService.isAuthenticated().pipe(
+    map((isAuthenticated) => {
+      if (isAuthenticated) {
+        return true; // Wenn authentifiziert, den Zugriff gewähren
+      } else {
+        return router.createUrlTree(['/login']); // Sonst zur Login-Seite umleiten
+      }
+    })
+  );
 };
 

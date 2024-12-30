@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FooterComponent } from '../shared/footer/footer.component';
 import { environment } from '../../environments/environments';
 import { VideoService } from '../service/video.service';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +30,7 @@ export class LoginComponent {
   toastr = inject(ToastrService);
   router = inject(Router);
   videoService = inject(VideoService);
-  private apiBaseUrl = environment.API_BASE_URL;
+  authService = inject(AuthService);
   private toastPosition = environment.TOASTR_POSITION;
   private toastTimeout = environment.TOASTR_TIMEOUT;
 
@@ -42,13 +43,10 @@ export class LoginComponent {
 
   constructor() { }
 
-  login() {
+  login(): void {
     if (this.email && this.password) {
-      this.http.post(this.apiBaseUrl + 'api/login/', {
-        username: this.email,
-        password: this.password,
-      }).subscribe({
-        next: (response: any) => {
+      this.authService.login(this.email, this.password).subscribe({
+        next: (response) => {
           const token = response.token;
           if (!token) {
             this.toastr.error('No token received.', 'Error', {
@@ -57,39 +55,88 @@ export class LoginComponent {
             });
             return;
           }
-          this.message = response.message;
-          this.error = '';
-          this.toastr.success(this.message, 'Success', {
-            positionClass: this.toastPosition,
-            timeOut: this.toastTimeout
-          });
           if (this.rememberMe) {
             localStorage.setItem('token', token);
           } else {
             sessionStorage.setItem('token', token);
           }
           this.loadVideos();
+          this.message = response.message;
+          this.error = '';
+          this.toastr.success(this.message, 'Success', {
+            positionClass: this.toastPosition,
+            timeOut: this.toastTimeout
+          });
           setTimeout(() => {
             this.router.navigate(['/video-list']);
           }, 2000);
         },
         error: (error) => {
-          this.error = error.error?.error || 'Error during log in. Check login data and try again.';
+          this.error = error.error?.error || 'Error during login. Check login data and try again.';
           this.message = '';
           this.toastr.error(this.error, 'Error', {
             positionClass: this.toastPosition,
             timeOut: this.toastTimeout
           });
-        },
+        }
       });
     } else {
-      this.error = 'Invalid log in.';
+      this.error = 'Invalid login.';
       this.toastr.error(this.error, 'Error', {
         positionClass: this.toastPosition,
         timeOut: this.toastTimeout
       });
     }
   }
+
+  // login() {
+  //   if (this.email && this.password) {
+  //     this.http.post(this.apiBaseUrl + 'api/login/', {
+  //       username: this.email,
+  //       password: this.password,
+  //     }).subscribe({
+  //       next: (response: any) => {
+  //         const token = response.token;
+  //         if (!token) {
+  //           this.toastr.error('No token received.', 'Error', {
+  //             positionClass: this.toastPosition,
+  //             timeOut: this.toastTimeout
+  //           });
+  //           return;
+  //         }
+  //         this.message = response.message;
+  //         this.error = '';
+  //         this.toastr.success(this.message, 'Success', {
+  //           positionClass: this.toastPosition,
+  //           timeOut: this.toastTimeout
+  //         });
+  //         if (this.rememberMe) {
+  //           localStorage.setItem('token', token);
+  //         } else {
+  //           sessionStorage.setItem('token', token);
+  //         }
+  //         this.loadVideos();
+  //         setTimeout(() => {
+  //           this.router.navigate(['/video-list']);
+  //         }, 2000);
+  //       },
+  //       error: (error) => {
+  //         this.error = error.error?.error || 'Error during log in. Check login data and try again.';
+  //         this.message = '';
+  //         this.toastr.error(this.error, 'Error', {
+  //           positionClass: this.toastPosition,
+  //           timeOut: this.toastTimeout
+  //         });
+  //       },
+  //     });
+  //   } else {
+  //     this.error = 'Invalid log in.';
+  //     this.toastr.error(this.error, 'Error', {
+  //       positionClass: this.toastPosition,
+  //       timeOut: this.toastTimeout
+  //     });
+  //   }
+  // }
 
 
   private loadVideos(): void {
