@@ -7,6 +7,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { FooterComponent } from '../shared/footer/footer.component';
 import { environment } from '../../environments/environments';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -27,10 +28,9 @@ export class SignupComponent {
   http = inject(HttpClient);
   toastr = inject(ToastrService);
   router = inject(Router);
-  private apiBaseUrl = environment.API_BASE_URL;
+  authService = inject(AuthService);
   private toastPosition = environment.TOASTR_POSITION;
   private toastTimeout = environment.TOASTR_TIMEOUT;
-
 
   isPasswordMismatch: boolean = false;
   isButtonDisabled: boolean = true;
@@ -42,9 +42,8 @@ export class SignupComponent {
   message: string = '';
   error: string = '';
 
+
   constructor() { }
-
-
 
 
   checkPasswordMatch(): void {
@@ -56,6 +55,7 @@ export class SignupComponent {
     this.updateButtonStatus();
   }
 
+
   updateButtonStatus(): void {
     this.isButtonDisabled =
       !this.password.trim() ||
@@ -63,13 +63,16 @@ export class SignupComponent {
       this.isPasswordMismatch;
   }
 
+
   checkPasswordLength() {
     return this.password.length <= 7;
   }
 
+
   togglePasswordVisibility() {
     this.passwordVisible = !this.passwordVisible;
   }
+
 
   signUp() {
     if (this.checkPasswordLength()) {
@@ -77,11 +80,11 @@ export class SignupComponent {
       return;
     } else {
       if (this.email && this.password) {
-        this.http.post(this.apiBaseUrl + 'api/registration/', {
-          email: this.email,
-          password: this.password,
-          confirm_password: this.confirmPassword,
-        }).subscribe({
+        this.authService.signUp(
+          this.email,
+          this.password,
+          this.confirmPassword)
+          .subscribe({
           next: (response: any) => {
             this.message = response.message;
             this.error = '';
@@ -111,5 +114,4 @@ export class SignupComponent {
       }, 3500);
     }
   }
-
 }
