@@ -69,49 +69,49 @@ export class SignupComponent {
   }
 
 
-  togglePasswordVisibility() {
+  togglePasswordVisibility(): void {
     this.passwordVisible = !this.passwordVisible;
   }
 
 
-  signUp() {
+  signUp(): void {
     if (this.checkPasswordLength()) {
       this.passwordTooShort = true;
       return;
-    } else {
-      if (this.email && this.password) {
-        this.authService.signUp(
-          this.email,
-          this.password,
-          this.confirmPassword)
-          .subscribe({
-          next: (response: any) => {
-            this.message = response.message;
-            this.error = '';
-            this.toastr.success(this.message, 'Success', {
-              positionClass: this.toastPosition,
-              timeOut: this.toastTimeout
-            });
-          },
-          error: (error) => {
-            this.error = error.error?.error || 'Error creating account.';
-            this.message = '';
-            this.toastr.error(this.error, 'Error', {
-              positionClass: this.toastPosition,
-              timeOut: this.toastTimeout
-            });
-          },
-        });
-      } else {
-        this.error = 'Invalid link.';
-        this.toastr.error(this.error, 'Error', {
-          positionClass: this.toastPosition,
-          timeOut: this.toastTimeout
-        });
-      }
-      setTimeout(() => {
-        this.router.navigate(['/']);
-      }, 3500);
     }
+
+    if (!this.email || !this.password) {
+      this.error = 'Invalid link.';
+      this.toastr.error(this.error, 'Error', {
+        positionClass: this.toastPosition,
+        timeOut: this.toastTimeout
+      });
+      return;
+    }
+
+    this.authService.signUp(this.email, this.password, this.confirmPassword)
+      .subscribe({
+        next: (response: any) => {
+          this.message = response.message;
+          this.error = '';
+          this.toastr.success(this.message, 'Success', {
+            positionClass: this.toastPosition,
+            timeOut: this.toastTimeout
+          });
+        },
+        error: (error) => {
+          this.error = error.error?.error || 'Error creating account.';
+          this.message = '';
+          this.toastr.error(this.error, 'Error', {
+            positionClass: this.toastPosition,
+            timeOut: this.toastTimeout
+          });
+        },
+        complete: () => {
+          setTimeout(() => {
+            this.router.navigate(['/']);
+          }, 3500);
+        }
+      });
   }
 }

@@ -43,12 +43,18 @@ export class LoginComponent {
 
   constructor() { }
 
-  
+
   login(): void {
-    if (this.email && this.password) {
-      this.authService.login(
-        this.email,
-        this.password)
+    if (!this.email || !this.password) {
+      this.error = 'Invalid login.';
+      this.toastr.error(this.error, 'Error', {
+        positionClass: this.toastPosition,
+        timeOut: this.toastTimeout
+      });
+      return;
+    }
+
+    this.authService.login(this.email, this.password)
       .subscribe({
         next: (response) => {
           const token = response.token;
@@ -71,9 +77,6 @@ export class LoginComponent {
             positionClass: this.toastPosition,
             timeOut: this.toastTimeout
           });
-          setTimeout(() => {
-            this.router.navigate(['/video-list']);
-          }, 2000);
         },
         error: (error) => {
           this.error = error.error?.error || 'Error during login. Check login data and try again.';
@@ -82,15 +85,22 @@ export class LoginComponent {
             positionClass: this.toastPosition,
             timeOut: this.toastTimeout
           });
+        },
+        complete: () => {
+          setTimeout(() => {
+            this.router.navigate(['/video-list']);
+          }, 2000);
         }
       });
-    } else {
-      this.error = 'Invalid login.';
-      this.toastr.error(this.error, 'Error', {
-        positionClass: this.toastPosition,
-        timeOut: this.toastTimeout
-      });
-    }
+     
+    
+    // else {
+    //   this.error = 'Invalid login.';
+    //   this.toastr.error(this.error, 'Error', {
+    //     positionClass: this.toastPosition,
+    //     timeOut: this.toastTimeout
+    //   });
+    // }
   }
 
 
