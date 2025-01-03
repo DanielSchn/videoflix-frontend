@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { HeaderComponent } from '../shared/header/header.component';
 import { FooterComponent } from '../shared/footer/footer.component';
 import { environment } from '../../environments/environments';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -27,6 +28,7 @@ export class ForgotPasswordComponent {
   http = inject(HttpClient);
   toastr = inject(ToastrService);
   router = inject(Router);
+  authService = inject(AuthService);
   private apiBaseUrl = environment.API_BASE_URL;
   private toastPosition = environment.TOASTR_POSITION;
   private toastTimeout = environment.TOASTR_TIMEOUT;
@@ -38,27 +40,40 @@ export class ForgotPasswordComponent {
   constructor() { }
 
   submitRequest() {
-    this.http.post(this.apiBaseUrl + 'api/password-reset/', { email: this.email }).subscribe({
-      next: (response: any) => {
-        this.message = response.message;
-        this.error = '';
-        this.toastr.success(this.message, 'Success', {
-          positionClass: this.toastPosition,
-          timeOut: this.toastTimeout
-        });
-      },
-      error: (error) => {
-        this.error = error.error?.error || 'Error in request.';
-        this.message = '';
-        this.toastr.error(this.error, 'Error', {
-          positionClass: this.toastPosition,
-          timeOut: this.toastTimeout
-        });
-      },
-    });
-    setTimeout(() => {
-      // this.router.navigate(['/']);
-    }, 4000);
+    if (!this.email) {
+      this.error = 'Please provide a valid email address.';
+      this.toastr.error(this.error, 'Error', {
+        positionClass: this.toastPosition,
+        timeOut: this.toastTimeout
+      });
+      return;
+    }
+
+    this.authService.forgotPassword(this.email)
+      .subscribe({
+        next: (response: any) => {
+          this.message = response.message;
+          this.error = '';
+          this.toastr.success(this.message, 'Success', {
+            positionClass: this.toastPosition,
+            timeOut: this.toastTimeout
+          });
+        },
+        error: (error) => {
+          this.error = error.error?.error || 'Error in request.';
+          this.message = '';
+          this.toastr.error(this.error, 'Error', {
+            positionClass: this.toastPosition,
+            timeOut: this.toastTimeout
+          });
+        },
+        complete: () => {
+          setTimeout(() => {
+            this.router.navigate(['/']);
+          }, 3000);
+        }
+      });
+    
   }
 
 }

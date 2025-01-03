@@ -45,4 +45,14 @@ export class AuthService {
   signUp(email: string, password: string, confirm_password: string): Observable<any> {
     return this.http.post<any>(`${this.apiBaseUrl}api/registration/`, { email, password, confirm_password });
   }
+
+
+  verifyEmail(uid: string,  token: string): Observable<any> {
+    return this.http.post<any>(`${this.apiBaseUrl}api/verify-email/`, { uid, token });
+  }
+
+
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post<any>(`${this.apiBaseUrl}api/password-reset/`, { email });
+  }
 }
