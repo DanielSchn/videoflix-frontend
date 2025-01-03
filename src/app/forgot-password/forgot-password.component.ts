@@ -37,12 +37,38 @@ export class ForgotPasswordComponent {
   constructor() { }
 
 
+  /**
+  * Validates the format of the provided email address.
+  * 
+  * This method checks if the email address follows a standard email format using a regular expression pattern. 
+  * If the email is valid, it sets the `isEmailValid` flag to `true`; otherwise, it sets it to `false`.
+  * 
+  * The regular expression used for validation ensures that the email contains:
+  * - Alphanumeric characters or special characters (`._%+-`) before the "@" symbol.
+  * - A domain name with valid characters (`.`, `-`, alphanumeric) after the "@" symbol.
+  * - A valid top-level domain with at least two alphabetic characters.
+  * 
+  * @returns void
+  */
   checkEmailFormat(): void {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     this.isEmailValid = emailPattern.test(this.email);
   }
 
 
+  /**
+  * Handles the submission of a password reset request.
+  * 
+  * This method first checks if the provided email address is valid by calling the `checkEmailFormat` method. 
+  * If the email is not valid, it shows an error message to the user and prevents the request from being sent.
+  * If the email is valid, the method calls the `forgotPassword` method from the `authService` to initiate the 
+  * password reset process. 
+  * 
+  * On success, a success message is displayed, and on failure, an error message is shown. 
+  * After completing the request, the user is redirected to the home page after a short delay.
+  * 
+  * @returns void
+  */
   submitRequest(): void {
     this.checkEmailFormat();
     if (!this.isEmailValid) {

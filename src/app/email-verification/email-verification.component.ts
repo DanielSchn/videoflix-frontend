@@ -30,6 +30,22 @@ export class EmailVerificationComponent {
 
   constructor() { }
 
+
+  /**
+  * Initializes the component and handles email verification process.
+  * 
+  * This lifecycle method runs when the component is initialized. It retrieves the `uid` and `token` from the query parameters
+  * in the URL. If either of these values is missing or invalid, it sets the verification status to `error` and navigates the user 
+  * to the home page with an error message displayed. If both parameters are present, it triggers the email verification 
+  * process by calling the `verifyEmail()` method from the authentication service.
+  * 
+  * - If the verification is successful, a success message is displayed.
+  * - If the verification fails, an error message is shown.
+  * 
+  * The method also sets a timeout for redirecting the user back to the home page after a delay.
+  * 
+  * @returns void
+  */
   ngOnInit(): void {
     const uid = this.route.snapshot.queryParamMap.get('uid');
     const token = this.route.snapshot.queryParamMap.get('token');

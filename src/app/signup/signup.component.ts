@@ -43,6 +43,11 @@ export class SignupComponent {
   constructor() { }
 
 
+  /**
+  * Checks if the password and confirm password fields match.
+  * Updates the `isPasswordMismatch` property based on the comparison.
+  * Also triggers a button status update by calling `updateButtonStatus`.
+  */
   checkPasswordMatch(): void {
     this.isPasswordMismatch =
       !!this.password.trim() &&
@@ -53,6 +58,12 @@ export class SignupComponent {
   }
 
 
+  /**
+  * Updates the status of the button based on the validity of the password and confirm password fields.
+  * The button will be disabled if:
+  * - Either the password or confirm password is empty, or
+  * - The passwords do not match.
+  */
   updateButtonStatus(): void {
     this.isButtonDisabled =
       !this.password.trim() ||
@@ -61,16 +72,35 @@ export class SignupComponent {
   }
 
 
-  checkPasswordLength() {
+  /**
+  * Checks if the password length is less than or equal to 7 characters.
+  * 
+  * @returns A boolean value indicating whether the password length is less than or equal to 7.
+  */
+  checkPasswordLength(): boolean {
     return this.password.length <= 7;
   }
 
 
+  /**
+  * Toggles the visibility of the password.
+  * Switches the `passwordVisible` property between `true` and `false` 
+  * to show or hide the password.
+  */
   togglePasswordVisibility(): void {
     this.passwordVisible = !this.passwordVisible;
   }
 
 
+  /**
+  * Handles the user sign-up process.
+  * 
+  * 1. Checks if the password meets the minimum length requirement.
+  * 2. Validates the email and password fields.
+  * 3. Calls the authentication service to sign up the user.
+  * 4. Displays appropriate success or error messages using `toastr`.
+  * 5. Redirects the user to the home page after a successful sign-up.
+  */
   signUp(): void {
     if (this.checkPasswordLength()) {
       this.passwordTooShort = true;

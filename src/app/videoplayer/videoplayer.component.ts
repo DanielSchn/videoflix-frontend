@@ -10,7 +10,7 @@ import { Videolist } from '../interfaces/videolist.interface';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../environments/environments';
 import { HeaderComponent } from '../shared/header/header.component';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '../service/toast.service';
 
 
 @Component({
@@ -31,10 +31,8 @@ import { ToastrService } from 'ngx-toastr';
 export class VideoplayerComponent {
   router = inject(Router);
   videoService = inject(VideoService);
-  toastr = inject(ToastrService);
+  toastr = inject(ToastService);
   apiMediaUrl = environment.API_MEDIA_URL;
-  private toastPosition = environment.TOASTR_POSITION;
-  private toastTimeout = environment.TOASTR_TIMEOUT;
 
   @ViewChild('videoPlayer', { static: false }) videoPlayer!: ElementRef;
   player: any;
@@ -62,6 +60,11 @@ export class VideoplayerComponent {
   }
 
 
+  /**
+  * Lifecycle hook that is called after Angular has fully initialized the component's view.
+  * It sets up event listeners for the video player to track progress, pause, and end events.
+  * Also, it ensures that video progress is saved when the page is unloaded or the video time updates.
+  */
   ngAfterViewInit(): void {
     if (this.videoPlayer && this.videoPlayer.nativeElement) {
       this.updateVideoSource(this.selectedQuality);
@@ -92,17 +95,28 @@ export class VideoplayerComponent {
   }
 
 
+  /**
+  * Handles the event when the video quality is changed.
+  * Displays a success message with the selected quality, stores the current playback time before the change,
+  * and updates the video source based on the new selected quality.
+  * 
+  * @param event The event object that contains the new quality value selected by the user.
+  */
   onQualityChange(event: any): void {
-    this.toastr.success(event.target.value, 'Change Quality to:', {
-      positionClass: this.toastPosition,
-      timeOut: this.toastTimeout
-    });
+    this.toastr.success(event.target.value, 'Change Quality to:');
     this.currentTimeBeforeQualityChange = this.getCurrentTime();
     this.selectedQuality = event.target.value;
     this.updateVideoSource(this.selectedQuality);
   }
 
 
+  /**
+  * Updates the video source based on the selected quality.
+  * It finds the corresponding video source URL from the quality options,
+  * and updates the video player's source to the new video URL.
+  * 
+  * @param quality The selected quality label (e.g., '720p', '1080p') to update the video source.
+  */
   updateVideoSource(quality: string): void {
     const selectedOption = this.qualityOptions.find(option => option.label === quality);
     if (selectedOption) {
@@ -115,6 +129,12 @@ export class VideoplayerComponent {
   }
 
 
+  /**
+  * Lifecycle hook that is called when the component is initialized.
+  * It retrieves the video source data, sets up available video quality options,
+  * and performs initial setup such as selecting the appropriate quality, updating the video source,
+  * adjusting the screen width, and loading the current video progress.
+  */
   ngOnInit(): void {
     this.videoSource = this.videoService.getVideoSource();
     this.qualityOptions = [
@@ -129,6 +149,10 @@ export class VideoplayerComponent {
   }
 
 
+  /**
+  * Selects the appropriate video quality based on the current screen width.
+  * It sets the selected video quality to '480p', '720p', or '1080p' depending on the screen width.
+  */
   selectVideoQualityByScreenWidth(): void {
     if (this.screenWidth < 720) {
       this.selectedQuality = '480p';
@@ -140,6 +164,11 @@ export class VideoplayerComponent {
   }
 
 
+  /**
+  * Saves the current video playback progress to the server.
+  * It retrieves the current playback time of the video and sends it to the video service
+  * to save the progress.
+  */
   saveVideoProgress(): void {
     const currentTime = this.videoPlayer.nativeElement.currentTime;
     this.videoService.setVideoProgress(currentTime).subscribe({
@@ -149,6 +178,11 @@ export class VideoplayerComponent {
   }
 
 
+  /**
+  * Retrieves the saved video playback progress from the server and updates the video player accordingly.
+  * If progress data is available, it sets the video's current playback time to the saved value.
+  * Otherwise, it resets the playback time to the beginning of the video.
+  */
   getVideoProgress(): void {
     this.videoService.loadVideoProgress().subscribe({
       next: (data) => {
@@ -167,6 +201,13 @@ export class VideoplayerComponent {
   }
 
 
+  /**
+  * Retrieves the current playback time of the video.
+  * If the video player element is available, it returns the `currentTime` property of the video player.
+  * Otherwise, it returns 0 as a fallback.
+  * 
+  * @returns The current playback time of the video in seconds, or 0 if the video player is not available.
+  */
   getCurrentTime(): number {
     if (this.videoPlayer && this.videoPlayer.nativeElement) {
       return this.videoPlayer.nativeElement.currentTime;
@@ -175,18 +216,32 @@ export class VideoplayerComponent {
   }
 
 
+  /**
+  * Listens for the window resize event and updates the screen width.
+  * This method is triggered automatically whenever the window is resized.
+  * 
+  * @param event The resize event object triggered by the browser.
+  */
   @HostListener('window:resize', ['$event'])
   onResize(event: Event): void {
     this.updateScreenWidth();
   }
 
 
+  /**
+  * Updates the current screen width by retrieving the window's inner width.
+  * Logs the updated screen width to the console for debugging purposes.
+  */
   private updateScreenWidth(): void {
     this.screenWidth = window.innerWidth;
     console.log('Aktuelle Bildschirmbreite:', this.screenWidth);
   }
 
 
+  /**
+  * Lifecycle hook that is called when the component is destroyed.
+  * Cleans up the video player instance by disposing of it to release resources.
+  */
   ngOnDestroy(): void {
     if (this.player) {
       this.player.dispose();

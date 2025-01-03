@@ -15,6 +15,15 @@ export class ToastService {
   constructor() { }
 
 
+  /**
+  * Displays different state notifications with the given message.
+  * 
+  * This method uses the `Toastr` service to display a success notification with the provided message. 
+  * You can also customize the title, position, and timeout duration.
+  * 
+  * @param message The message to display in the notification.
+  * @param title The title of the notification (default is "Success").
+  */
   success(message: string, title: string = 'Success') {
     this.toastr.success(message, title, {
       positionClass: this.toastPosition,
@@ -42,6 +51,4 @@ export class ToastService {
       timeOut: this.toastTimeout
     });
   }
-
-
 }

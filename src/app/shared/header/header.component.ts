@@ -26,7 +26,15 @@ export class HeaderComponent {
 
   constructor(){}
 
-  ngOnInit() {
+
+  /**
+  * Lifecycle hook that initializes the component.
+  * 
+  * - Checks if the user is logged in by looking for a token in `localStorage` or `sessionStorage`.
+  * - Sets the `loggedIn` status and redirects the user to the video list page if logged in.
+  * - Determines which page is currently active based on the current URL and sets corresponding flags.
+  */
+  ngOnInit(): void {
     this.url = this.router.url;
 
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
@@ -60,7 +68,11 @@ export class HeaderComponent {
   }
 
 
-  logout() {
+  /**
+  * Logs the user out by removing the authentication token from localStorage and sessionStorage.
+  * After a brief delay, redirects the user to the home page.
+  */
+  logout(): void {
     localStorage.removeItem('token');
     sessionStorage.removeItem('token');
     setTimeout(() => {

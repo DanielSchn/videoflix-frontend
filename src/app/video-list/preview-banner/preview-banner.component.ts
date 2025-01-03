@@ -31,6 +31,12 @@ export class PreviewBannerComponent {
 
   constructor() { }
 
+
+  /**
+  * Lifecycle hook that initializes the component.
+  * Fetches the list of videos from the video service and assigns it to a local property.
+  * Logs the list to the console after a delay of 3 seconds (for debugging purposes).
+  */
   ngOnInit(): void {
     this.videoService.getList().subscribe((data) => {
       this.list = data;
@@ -39,10 +45,4 @@ export class PreviewBannerComponent {
       console.log(this.list);
     }, 3000);
   }
-
-  // loadData() {
-  //   this.VideoService.fetchList().subscribe((data) => {
-  //     this.list = data;
-  //   });
-  // }
 }

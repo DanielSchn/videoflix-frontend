@@ -28,6 +28,11 @@ export class VideoListComponent {
   router = inject(Router);
   videoService = inject(VideoService);
 
+
+  /**
+  * An observable that provides a list of videos fetched from the video service.
+  * The observable emits an array of video data when the fetch operation is successful.
+  */
   list$: Observable<any[]> = this.videoService.fetchList();
 
   constructor() {}

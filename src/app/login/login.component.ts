@@ -41,6 +41,19 @@ export class LoginComponent {
   constructor() { }
 
 
+  /**
+  * Handles user login, validates the credentials, and manages the session/token storage.
+  * 
+  * This method checks if the email and password are provided. If either is missing, it displays an error message 
+  * and prevents further action. It then calls the `login` method from the `authService` to authenticate the user. 
+  * If the login is successful, the method stores the received token in either `localStorage` or `sessionStorage` 
+  * based on the `rememberMe` flag. It also loads the user's videos and displays a success message.
+  * If the login fails, an error message is shown to the user.
+  * 
+  * After completing the login process, the user is redirected to the `/video-list` page.
+  * 
+  * @returns void
+  */
   login(): void {
     if (!this.email || !this.password) {
       this.error = 'Invalid login.';
@@ -80,6 +93,15 @@ export class LoginComponent {
   }
 
 
+  /**
+  * Loads the list of videos by fetching data from the video service.
+  * 
+  * This method calls the `fetchList` method of the `videoService` to retrieve the video data. Once the data is successfully 
+  * fetched, a message indicating that the videos have been loaded is logged to the console.
+  * This method does not return any value.
+  * 
+  * @returns void
+  */
   private loadVideos(): void {
     this.videoService.fetchList().subscribe(() => {
       console.log('Videos loaded!');
@@ -87,6 +109,15 @@ export class LoginComponent {
   }
 
 
+  /**
+  * Toggles the visibility of the password.
+  * 
+  * This method changes the `passwordVisible` boolean flag to either show or hide the password input. 
+  * It is commonly used in password fields to switch between a masked and unmasked view of the password. 
+  * When the password is visible, the input type is set to "text", and when it is hidden, the input type is set to "password".
+  * 
+  * @returns void
+  */
   togglePasswordVisibility(): void {
     this.passwordVisible = !this.passwordVisible;
   }
