@@ -2,9 +2,8 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { environment } from '../../environments/environments';
 import { AuthService } from '../service/auth.service';
+import { ToastService } from '../service/toast.service';
 
 @Component({
   selector: 'app-email-verification',
@@ -22,10 +21,8 @@ export class EmailVerificationComponent {
   route = inject(ActivatedRoute);
   http = inject(HttpClient);
   router = inject(Router);
-  toastr = inject(ToastrService);
+  toastr = inject(ToastService);
   authService = inject(AuthService);
-  private toastPosition = environment.TOASTR_POSITION;
-  private toastTimeout = environment.TOASTR_TIMEOUT;
 
   verificationStatus: 'loading' | 'success' | 'error' = 'loading';
   errorMessage: string = '';
@@ -40,10 +37,7 @@ export class EmailVerificationComponent {
     if (!uid || !token) {
       this.verificationStatus = 'error';
       this.errorMessage = 'Invalid link.';
-      this.toastr.error(this.errorMessage, 'Error', {
-        positionClass: this.toastPosition,
-        timeOut: this.toastTimeout
-      });
+      this.toastr.error(this.errorMessage);
       setTimeout(() => {
         this.router.navigate(['/']);
       }, 3000);
@@ -56,19 +50,13 @@ export class EmailVerificationComponent {
           this.verificationStatus = 'success';
           this.errorMessage = '';
           this.message = response.message;
-          this.toastr.success(this.message, 'Success', {
-            positionClass: this.toastPosition,
-            timeOut: this.toastTimeout
-          });
+          this.toastr.success(this.message);
         },
         error: (error) => {
           this.verificationStatus = 'error';
           this.message = '';
           this.errorMessage = error.error?.error || 'Verification error!';
-          this.toastr.error(this.errorMessage, 'Error', {
-            positionClass: this.toastPosition,
-            timeOut: this.toastTimeout
-          });
+          this.toastr.error(this.errorMessage);
         },
         complete: () => {
           setTimeout(() => {

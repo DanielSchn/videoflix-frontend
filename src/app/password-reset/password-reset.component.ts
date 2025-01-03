@@ -3,10 +3,11 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { HeaderComponent } from '../shared/header/header.component';
 import { FooterComponent } from '../shared/footer/footer.component';
 import { environment } from '../../environments/environments';
+import { AuthService } from '../service/auth.service';
+import { ToastService } from '../service/toast.service';
 
 
 @Component({
@@ -27,10 +28,10 @@ import { environment } from '../../environments/environments';
 export class PasswordResetComponent {
 
   http = inject(HttpClient);
-  toastr = inject(ToastrService);
+  toastr = inject(ToastService);
   router = inject(Router);
   route = inject(ActivatedRoute);
-  private apiBaseUrl = environment.API_BASE_URL;
+  authService = inject(AuthService);
   private toastPosition = environment.TOASTR_POSITION;
   private toastTimeout = environment.TOASTR_TIMEOUT;
 
@@ -61,6 +62,7 @@ export class PasswordResetComponent {
     this.updateButtonStatus();
   }
 
+
   updateButtonStatus(): void {
     this.isButtonDisabled =
       !this.newPassword.trim() ||
@@ -68,43 +70,39 @@ export class PasswordResetComponent {
       this.isPasswordMismatch;
   }
 
-  resetPassword() {
-    if (this.uid && this.token) {
-      this.http.post(this.apiBaseUrl + 'api/password-reset-confirm/', {
-        uid: this.uid,
-        token: this.token,
-        new_password: this.newPassword,
-      }).subscribe({
+
+  resetPassword(): void {
+    if (!this.uid || !this.token) {
+      this.error = 'Invalid link.';
+      this.toastr.error(this.error);
+      setTimeout(() => {
+        this.router.navigate(['/login']);
+      }, 2000);
+      return;
+    }
+
+    this.authService.passwordReset(this.uid, this.token, this.newPassword)
+      .subscribe({
         next: (response: any) => {
           this.message = response.message;
           this.error = '';
-          this.toastr.success(this.message, 'Success', {
-            positionClass: this.toastPosition,
-            timeOut: this.toastTimeout
-          });
+          this.toastr.success(this.message);
         },
         error: (error) => {
           this.error = error.error?.error || 'Error resetting password.';
           this.message = '';
-          this.toastr.error(this.error, 'Error', {
-            positionClass: this.toastPosition,
-            timeOut: this.toastTimeout
-          });
+          this.toastr.error(this.error);
         },
+        complete: () => {
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 2000);
+        }
       });
-    } else {
-      this.error = 'Invalid link.';
-      this.toastr.error(this.error, 'Error', {
-        positionClass: this.toastPosition,
-        timeOut: this.toastTimeout
-      });
-    }
-    setTimeout(() => {
-      this.router.navigate(['/login']);
-    }, 2000);
   }
 
-  togglePasswordVisibility() {
+
+  togglePasswordVisibility(): void {
     this.passwordVisible = !this.passwordVisible;
   }
 

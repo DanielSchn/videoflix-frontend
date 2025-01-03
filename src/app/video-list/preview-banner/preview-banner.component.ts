@@ -1,10 +1,10 @@
 import { Component, inject, Input } from '@angular/core';
 import { VideoService } from '../../service/video.service';
 import { CommonModule } from '@angular/common';
-import {VgCoreModule} from '@videogular/ngx-videogular/core';
-import {VgControlsModule} from '@videogular/ngx-videogular/controls';
-import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
-import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
+import { VgCoreModule } from '@videogular/ngx-videogular/core';
+import { VgControlsModule } from '@videogular/ngx-videogular/controls';
+import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
+import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 import { Videolist } from '../../interfaces/videolist.interface';
 import { environment } from '../../../environments/environments';
 
@@ -25,11 +25,11 @@ export class PreviewBannerComponent {
 
   videoService = inject(VideoService);
   apiMediaUrl = environment.API_MEDIA_URL;
-  
+
   list: Videolist[] = [];
   randomNumber: number = Math.floor(Math.random() * 7) + 1;
-  
-  constructor() {}
+
+  constructor() { }
 
   ngOnInit(): void {
     this.videoService.getList().subscribe((data) => {

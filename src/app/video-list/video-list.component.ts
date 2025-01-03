@@ -30,25 +30,6 @@ export class VideoListComponent {
 
   list$: Observable<any[]> = this.videoService.fetchList();
 
-  constructor() {
-    // this.loadData();
-  }
-
-  // ngOnInit() {
-  //   this.loadData();
-  //   console.log(this.list);
-  //   setTimeout(() => {
-  //     console.log(this.list);  
-  //   }, 2000);
-    
-  // }
-
-  // loadData() {
-  //   this.VideoService.fetchList().subscribe((data) => {
-  //     this.list = data;
-  //   });
-  // }
-
-
+  constructor() {}
 
 }

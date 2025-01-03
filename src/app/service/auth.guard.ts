@@ -17,9 +17,9 @@ export const authGuard: CanActivateFn = (route, state): Observable<boolean | imp
   return authService.isAuthenticated().pipe(
     map((isAuthenticated) => {
       if (isAuthenticated) {
-        return true; // Wenn authentifiziert, den Zugriff gewähren
+        return true;
       } else {
-        return router.createUrlTree(['/login']); // Sonst zur Login-Seite umleiten
+        return router.createUrlTree(['/login']);
       }
     })
   );

@@ -4,10 +4,9 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr';
 import { FooterComponent } from '../shared/footer/footer.component';
-import { environment } from '../../environments/environments';
 import { AuthService } from '../service/auth.service';
+import { ToastService } from '../service/toast.service';
 
 @Component({
   selector: 'app-signup',
@@ -26,11 +25,9 @@ import { AuthService } from '../service/auth.service';
 export class SignupComponent {
 
   http = inject(HttpClient);
-  toastr = inject(ToastrService);
+  toastr = inject(ToastService);
   router = inject(Router);
   authService = inject(AuthService);
-  private toastPosition = environment.TOASTR_POSITION;
-  private toastTimeout = environment.TOASTR_TIMEOUT;
 
   isPasswordMismatch: boolean = false;
   isButtonDisabled: boolean = true;
@@ -82,10 +79,7 @@ export class SignupComponent {
 
     if (!this.email || !this.password) {
       this.error = 'Invalid link.';
-      this.toastr.error(this.error, 'Error', {
-        positionClass: this.toastPosition,
-        timeOut: this.toastTimeout
-      });
+      this.toastr.error(this.error);
       return;
     }
 
@@ -94,18 +88,12 @@ export class SignupComponent {
         next: (response: any) => {
           this.message = response.message;
           this.error = '';
-          this.toastr.success(this.message, 'Success', {
-            positionClass: this.toastPosition,
-            timeOut: this.toastTimeout
-          });
+          this.toastr.success(this.message);
         },
         error: (error) => {
           this.error = error.error?.error || 'Error creating account.';
           this.message = '';
-          this.toastr.error(this.error, 'Error', {
-            positionClass: this.toastPosition,
-            timeOut: this.toastTimeout
-          });
+          this.toastr.error(this.error);
         },
         complete: () => {
           setTimeout(() => {

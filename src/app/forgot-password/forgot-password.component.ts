@@ -3,11 +3,10 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { HeaderComponent } from '../shared/header/header.component';
 import { FooterComponent } from '../shared/footer/footer.component';
-import { environment } from '../../environments/environments';
 import { AuthService } from '../service/auth.service';
+import { ToastService } from '../service/toast.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -26,26 +25,29 @@ import { AuthService } from '../service/auth.service';
 export class ForgotPasswordComponent {
 
   http = inject(HttpClient);
-  toastr = inject(ToastrService);
+  toastr = inject(ToastService);
   router = inject(Router);
   authService = inject(AuthService);
-  private apiBaseUrl = environment.API_BASE_URL;
-  private toastPosition = environment.TOASTR_POSITION;
-  private toastTimeout = environment.TOASTR_TIMEOUT;
 
   email: string = '';
   message: string = '';
   error: string = '';
+  isEmailValid: boolean = false;
 
   constructor() { }
 
-  submitRequest() {
-    if (!this.email) {
+
+  checkEmailFormat(): void {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    this.isEmailValid = emailPattern.test(this.email);
+  }
+
+
+  submitRequest(): void {
+    this.checkEmailFormat();
+    if (!this.isEmailValid) {
       this.error = 'Please provide a valid email address.';
-      this.toastr.error(this.error, 'Error', {
-        positionClass: this.toastPosition,
-        timeOut: this.toastTimeout
-      });
+      this.toastr.error(this.error);
       return;
     }
 
@@ -54,18 +56,12 @@ export class ForgotPasswordComponent {
         next: (response: any) => {
           this.message = response.message;
           this.error = '';
-          this.toastr.success(this.message, 'Success', {
-            positionClass: this.toastPosition,
-            timeOut: this.toastTimeout
-          });
+          this.toastr.success(this.message);
         },
         error: (error) => {
           this.error = error.error?.error || 'Error in request.';
           this.message = '';
-          this.toastr.error(this.error, 'Error', {
-            positionClass: this.toastPosition,
-            timeOut: this.toastTimeout
-          });
+          this.toastr.error(this.error);
         },
         complete: () => {
           setTimeout(() => {
@@ -73,7 +69,6 @@ export class ForgotPasswordComponent {
           }, 3000);
         }
       });
-    
   }
 
 }

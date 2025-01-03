@@ -4,11 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr';
 import { FooterComponent } from '../shared/footer/footer.component';
-import { environment } from '../../environments/environments';
 import { VideoService } from '../service/video.service';
 import { AuthService } from '../service/auth.service';
+import { ToastService } from '../service/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -27,12 +26,10 @@ import { AuthService } from '../service/auth.service';
 export class LoginComponent {
 
   http = inject(HttpClient);
-  toastr = inject(ToastrService);
+  toastr = inject(ToastService);
   router = inject(Router);
   videoService = inject(VideoService);
   authService = inject(AuthService);
-  private toastPosition = environment.TOASTR_POSITION;
-  private toastTimeout = environment.TOASTR_TIMEOUT;
 
   email: string = '';
   password: string = '';
@@ -47,10 +44,7 @@ export class LoginComponent {
   login(): void {
     if (!this.email || !this.password) {
       this.error = 'Invalid login.';
-      this.toastr.error(this.error, 'Error', {
-        positionClass: this.toastPosition,
-        timeOut: this.toastTimeout
-      });
+      this.toastr.error(this.error);
       return;
     }
 
@@ -59,10 +53,7 @@ export class LoginComponent {
         next: (response) => {
           const token = response.token;
           if (!token) {
-            this.toastr.error('No token received.', 'Error', {
-              positionClass: this.toastPosition,
-              timeOut: this.toastTimeout
-            });
+            this.toastr.error('No token received.');
             return;
           }
           if (this.rememberMe) {
@@ -73,18 +64,12 @@ export class LoginComponent {
           this.loadVideos();
           this.message = response.message;
           this.error = '';
-          this.toastr.success(this.message, 'Success', {
-            positionClass: this.toastPosition,
-            timeOut: this.toastTimeout
-          });
+          this.toastr.success(this.message);
         },
         error: (error) => {
           this.error = error.error?.error || 'Error during login. Check login data and try again.';
           this.message = '';
-          this.toastr.error(this.error, 'Error', {
-            positionClass: this.toastPosition,
-            timeOut: this.toastTimeout
-          });
+          this.toastr.error(this.error);
         },
         complete: () => {
           setTimeout(() => {

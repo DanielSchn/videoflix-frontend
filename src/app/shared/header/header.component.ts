@@ -65,6 +65,6 @@ export class HeaderComponent {
     sessionStorage.removeItem('token');
     setTimeout(() => {
       this.router.navigate(['/']);  
-    }, 500);
+    }, 1000);
   }
 }
