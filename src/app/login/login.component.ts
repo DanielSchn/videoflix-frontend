@@ -92,15 +92,6 @@ export class LoginComponent {
           }, 2000);
         }
       });
-     
-    
-    // else {
-    //   this.error = 'Invalid login.';
-    //   this.toastr.error(this.error, 'Error', {
-    //     positionClass: this.toastPosition,
-    //     timeOut: this.toastTimeout
-    //   });
-    // }
   }
 
 
@@ -111,7 +102,7 @@ export class LoginComponent {
   }
 
 
-  togglePasswordVisibility() {
+  togglePasswordVisibility(): void {
     this.passwordVisible = !this.passwordVisible;
   }
 }
