@@ -11,6 +11,7 @@ export class VideoService {
   private listSubject = new BehaviorSubject<any[]>([]);
   http = inject(HttpClient);
   private apiBaseUrl = environment.API_BASE_URL;
+  screenWidth: number = 0;
 
   private videoSource: Videolist = {
     id: 0,

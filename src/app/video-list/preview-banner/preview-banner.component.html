@@ -1,4 +1,4 @@
-<div class="main-container">
+<div *ngIf="this.videoService.screenWidth > 750" class="main-container">
     <div class="description-container">
         <h1 *ngIf="list && list.length > 0" class="dm-sans-font">{{ list[randomNumber].title }}</h1>
         <p *ngIf="list && list.length > 0" class="dm-sans-font">{{ list[randomNumber].description }}</p>

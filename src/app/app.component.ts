@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { VideoService } from './service/video.service';
 
@@ -17,8 +17,32 @@ export class AppComponent {
   videoService = inject(VideoService);
   router = inject(Router);
 
+  
   constructor() {
     this.loadVideos();
+    this.updateScreenWidth();
+  }
+
+
+  /**
+  * Listens for the window resize event and updates the screen width.
+  * This method is triggered automatically whenever the window is resized.
+  * 
+  * @param event The resize event object triggered by the browser.
+  */
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.updateScreenWidth();
+  }
+
+
+  /**
+  * Updates the current screen width by retrieving the window's inner width.
+  * Logs the updated screen width to the console for debugging purposes.
+  */
+  private updateScreenWidth(): void {
+    this.videoService.screenWidth = window.innerWidth;
+    console.log('Aktuelle Bildschirmbreite:', this.videoService.screenWidth);
   }
 
 

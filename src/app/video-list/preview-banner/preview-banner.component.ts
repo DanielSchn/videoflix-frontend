@@ -29,7 +29,7 @@ export class PreviewBannerComponent {
   list: Videolist[] = [];
   randomNumber: number = Math.floor(Math.random() * 7) + 1;
 
-  constructor() { }
+  constructor() {}
 
 
   /**

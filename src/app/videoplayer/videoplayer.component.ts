@@ -53,13 +53,13 @@ export class VideoplayerComponent {
   selectedQuality: string = '720p';
   videoSrc: string = '';
   currentTimeBeforeQualityChange: number = 0;
-  screenWidth: number = 0;
+  // screenWidth: number = 0;
   private intervalId: any;
   showOverlay: boolean = false;
   savedProgress: number = 0;
 
   constructor() {
-    this.screenWidth = window.innerWidth;
+    this.videoService.screenWidth = window.innerWidth;
   }
 
 
@@ -148,7 +148,7 @@ export class VideoplayerComponent {
     ].filter(option => option.src);
     this.selectVideoQualityByScreenWidth();
     this.updateVideoSource(this.selectedQuality);
-    this.updateScreenWidth();
+    // this.updateScreenWidth();
     this.getVideoProgress();
   }
 
@@ -158,9 +158,9 @@ export class VideoplayerComponent {
   * It sets the selected video quality to '480p', '720p', or '1080p' depending on the screen width.
   */
   selectVideoQualityByScreenWidth(): void {
-    if (this.screenWidth < 720) {
+    if (this.videoService.screenWidth < 720) {
       this.selectedQuality = '480p';
-    } else if (this.screenWidth < 1080) {
+    } else if (this.videoService.screenWidth < 1080) {
       this.selectedQuality = '720p';
     } else {
       this.selectedQuality = '1080p';
@@ -245,28 +245,6 @@ export class VideoplayerComponent {
       return this.videoPlayer.nativeElement.currentTime;
     }
     return 0;
-  }
-
-
-  /**
-  * Listens for the window resize event and updates the screen width.
-  * This method is triggered automatically whenever the window is resized.
-  * 
-  * @param event The resize event object triggered by the browser.
-  */
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event): void {
-    this.updateScreenWidth();
-  }
-
-
-  /**
-  * Updates the current screen width by retrieving the window's inner width.
-  * Logs the updated screen width to the console for debugging purposes.
-  */
-  private updateScreenWidth(): void {
-    this.screenWidth = window.innerWidth;
-    console.log('Aktuelle Bildschirmbreite:', this.screenWidth);
   }
 
 
