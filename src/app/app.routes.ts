@@ -22,5 +22,5 @@ export const routes: Routes = [
     { path: 'legal', component: ImpressumComponent },
     { path: 'privacy', component: DatenschutzComponent },
     { path: 'video-list', component: VideoListComponent, canActivate: [authGuard] },
-    { path: 'video-player', component: VideoplayerComponent }
+    { path: 'video-player', component: VideoplayerComponent, canActivate: [authGuard] }
 ];

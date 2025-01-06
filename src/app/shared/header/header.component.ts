@@ -39,7 +39,7 @@ export class HeaderComponent {
 
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
 
-    if (token) {
+    if (token && this.router.url != '/video-player') {
       this.loggedIn = true;
       this.router.navigate(['/video-list']);
     } else {

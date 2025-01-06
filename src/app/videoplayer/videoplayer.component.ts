@@ -54,6 +54,7 @@ export class VideoplayerComponent {
   videoSrc: string = '';
   currentTimeBeforeQualityChange: number = 0;
   screenWidth: number = 0;
+  private intervalId: any;
 
   constructor() {
     this.screenWidth = window.innerWidth;
@@ -75,22 +76,23 @@ export class VideoplayerComponent {
 
       this.videoPlayer.nativeElement.addEventListener('pause', () => {
         this.saveVideoProgress();
+        clearInterval(this.intervalId);
       });
 
       this.videoPlayer.nativeElement.addEventListener('ended', () => {
         this.saveVideoProgress();
+        clearInterval(this.intervalId);
       });
 
       window.addEventListener('beforeunload', () => {
         this.saveVideoProgress();
       });
 
-      setTimeout(() => {
-        this.videoPlayer.nativeElement.addEventListener('timeupdate', () => {
-          this.saveVideoProgress();
-        });
-      }, 1500);
-
+      this.videoPlayer.nativeElement.addEventListener('play', () => {  
+        this.intervalId = setInterval(() => {  
+         this.saveVideoProgress();  
+        }, 5000);
+      });
     }
   }
 
@@ -246,5 +248,6 @@ export class VideoplayerComponent {
     if (this.player) {
       this.player.dispose();
     }
+    clearInterval(this.intervalId);
   }
 }
