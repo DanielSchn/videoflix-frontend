@@ -38,6 +38,8 @@ export class SignupComponent {
   email: string = '';
   message: string = '';
   error: string = '';
+  checkboxChecked: boolean = false;
+
 
 
   constructor() { }
@@ -68,7 +70,8 @@ export class SignupComponent {
     this.isButtonDisabled =
       !this.password.trim() ||
       !this.confirmPassword.trim() ||
-      this.isPasswordMismatch;
+      this.isPasswordMismatch ||
+      !this.checkboxChecked;
   }
 
 

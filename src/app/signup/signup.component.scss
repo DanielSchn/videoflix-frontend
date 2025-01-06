@@ -21,7 +21,7 @@
 
 .input-container {
     width: 520px;
-    height: 450px;
+    height: 475px;
     background-color: $white;
     border: unset;
     border-radius: 48px;
@@ -53,7 +53,7 @@ form {
     gap: 24px;
     width: 100%;
 
-    input {
+    .text-input {
         width: 75%;
         height: 48px;
         border-radius: 12px;
@@ -86,6 +86,15 @@ form {
         }
     }
 }
+
+.checkbox-container {
+    @include dFlex();
+    gap: 8px;
+}
+
+// .checkbox {
+//     height: 32px;
+// }
 
 .password-container {
     position: relative;

@@ -1,32 +1,46 @@
 <body>
     <div class="main-container">
         <app-header></app-header>
-    
+
         <div class="site-container">
             <div class="input-container">
                 <h1>Sign up</h1>
                 <form (submit)="signUp(); $event.preventDefault();">
-                    <input class="login-input" id="email" name="email" type="email" [(ngModel)]="email" placeholder="Email address" required>
+                    <input class="login-input" id="email" name="email" type="email" [(ngModel)]="email"
+                        placeholder="Email address" required>
                     <div class="password-container">
-                        <input class="password-input login-input" id="password" name="password" [type]="passwordVisible ? 'text' : 'password'" [(ngModel)]="password" placeholder="Enter a password" minlength="8" required>
+                        <input class="password-input login-input text-input" id="password" name="password"
+                            [type]="passwordVisible ? 'text' : 'password'" [(ngModel)]="password"
+                            placeholder="Enter a password" minlength="8" required>
                         <span (click)="togglePasswordVisibility()" class="toggle-password">
-                            <img [src]="passwordVisible ? 'assets/icons/view.png' : 'assets/icons/hidden.png'" alt="toggle visibility">
+                            <img [src]="passwordVisible ? 'assets/icons/view.png' : 'assets/icons/hidden.png'"
+                                alt="toggle visibility">
                         </span>
-                        
+
                     </div>
-                    <input id="confirmPassword" name="confirmPassword" [type]="passwordVisible ? 'text' : 'password'" [(ngModel)]="confirmPassword" placeholder="Confirm password" minlength="8" (keyup)="checkPasswordMatch()" required>
+                    <input class="text-input" id="confirmPassword" name="confirmPassword"
+                        [type]="passwordVisible ? 'text' : 'password'" [(ngModel)]="confirmPassword"
+                        placeholder="Confirm password" minlength="8" (keyup)="checkPasswordMatch()" required>
                     <div>
                         <p *ngIf="isPasswordMismatch" style="color: red;">The passwords do not match.</p>
-                        <p *ngIf="passwordTooShort" style="color: red;">The password is too short. Please at least 8 characters.</p>
+                        <p *ngIf="passwordTooShort" style="color: red;">The password is too short. Please at least 8
+                            characters.</p>
                     </div>
-    
-                    <button [ngClass]="isButtonDisabled ? 'not-filled' : 'filled'" type="submit" [disabled]="isButtonDisabled">Sign up</button>
+                    <div class="checkbox-container">
+                        <input class="checkbox" type="checkbox" name="privacy" [(ngModel)]="checkboxChecked" (ngModelChange)="updateButtonStatus()">
+                        <p>Please confirm the
+                            <a routerLink="/privacy">privacy policy</a>.
+                        </p>
+                    </div>
+
+                    <button [ngClass]="isButtonDisabled ? 'not-filled' : 'filled'" type="submit"
+                        [disabled]="isButtonDisabled">Sign up</button>
                 </form>
-                
+
             </div>
         </div>
-    
+
         <app-footer></app-footer>
-        
+
     </div>
 </body>

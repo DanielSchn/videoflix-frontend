@@ -187,30 +187,12 @@ export class VideoplayerComponent {
   * If progress data is available, it sets the video's current playback time to the saved value.
   * Otherwise, it resets the playback time to the beginning of the video.
   */
-  // getVideoProgress(): void {
-  //   this.videoService.loadVideoProgress().subscribe({
-  //     next: (data) => {
-  //       if (data && data.current_time !== undefined) {
-  //         this.savedProgress = data.current_time;
-  //         console.log('SAVED', this.savedProgress);
-  //         this.videoPlayer.nativeElement.currentTime = 0;
-  //         this.videoPlayer.nativeElement.currentTime = this.savedProgress;
-  //         console.log('Progress loaded:', this.savedProgress);
-  //       } else {
-  //         this.videoPlayer.nativeElement.currentTime = 0;
-  //       }
-  //     },
-  //     error: (err) => console.error('Error loading progress:', err),
-  //   });
-  // }
-
-
   getVideoProgress(): void {
     this.videoService.loadVideoProgress().subscribe({
       next: (data) => {
-        if (data && data.current_time !== undefined) {
+        if (data && data.current_time !== undefined && data.current_time > 0) {
           this.savedProgress = data.current_time;
-          this.showOverlay = true; // Zeige Overlay an
+          this.showOverlay = true;
         } else {
           this.videoPlayer.nativeElement.currentTime = 0;
         }
@@ -220,15 +202,31 @@ export class VideoplayerComponent {
   }
 
 
+  /**
+  * Resumes video playback from the saved progress and hides the overlay.
+  * 
+  * This method sets the video player's current playback time to the saved progress 
+  * (`this.savedProgress`) and then starts playing the video from that position. 
+  * The overlay (e.g., a UI prompt or pause screen) is hidden before the video starts playing.
+  * 
+  * @returns void
+  */
   resumeVideo(): void {
-    // Setze das Video auf den gespeicherten Fortschritt und verstecke das Overlay
     this.videoPlayer.nativeElement.currentTime = this.savedProgress;
     this.showOverlay = false;
     this.videoPlayer.nativeElement.play();
   }
 
+
+  /**
+  * Restarts video playback from the beginning and hides the overlay.
+  * 
+  * This method sets the video player's current playback time to 0, effectively restarting 
+  * the video from the beginning. The overlay is hidden before the video starts playing.
+  * 
+  * @returns void
+  */
   restartVideo(): void {
-    // Starte das Video von vorne und verstecke das Overlay
     this.videoPlayer.nativeElement.currentTime = 0;
     this.showOverlay = false;
     this.videoPlayer.nativeElement.play();
