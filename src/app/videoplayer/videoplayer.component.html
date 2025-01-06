@@ -2,9 +2,9 @@
     <app-header></app-header>
     <div class="video-container">
         <h1>{{ videoSource.title }}</h1>
-        <video #videoPlayer autoplay controls playsinline preload="auto">
+        <video #videoPlayer controls playsinline preload="auto">
             <source [src]="videoSrc" type="video/mp4">
-        </video> 
+        </video>
         <div class="quality-selector">
             <select id="quality" (change)="onQualityChange($event)">
                 <option *ngFor="let option of qualityOptions" [value]="option.label"
@@ -12,6 +12,16 @@
                     {{ option.label }}
                 </option>
             </select>
+        </div>
+    </div>
+    <div *ngIf="showOverlay" class="overlay">
+        <div class="overlay-content">
+            <p>Would you like to continue watching or start over?</p>
+            <div class="button-container">
+                <button (click)="resumeVideo()">Continue</button>
+                <button (click)="restartVideo()">Start Over</button>
+            </div>
+
         </div>
     </div>
     <div class="description-container">

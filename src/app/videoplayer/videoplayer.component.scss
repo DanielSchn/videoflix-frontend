@@ -23,6 +23,31 @@ video {
     flex-direction: column;
 }
 
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    @include dFlex();
+    z-index: 1000;
+}
+
+.overlay-content {
+    text-align: center;
+    color: $white;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    gap: 32px;
+
+    >p {
+        font-size: clamp(1rem, 0.6rem + 2vw, 3rem);
+        margin: 64px 0;
+    }
+}
+
 video.video-js {
     width: 100%;
     height: auto;
@@ -30,6 +55,27 @@ video.video-js {
     max-width: 100%;
     object-fit: contain;
     background-color: $black;
+}
+
+.button-container {
+    @include dFlex();
+    gap: 16px;
+}
+
+button {
+    width: 144px;
+    height: 48px;
+    background-color: $purple;
+    color: $white;
+    font-weight: 400;
+    border-radius: 40px;
+    border: unset;
+    font-size: 18px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $purpleHover;
+    }
 }
 
 .quality-selector {
@@ -53,5 +99,11 @@ h2 {
 @media (max-width: 1000px) {
     .description-container {
         padding: 0 16px;
+    }
+}
+
+@media (max-width: 360px) {
+    .button-container {
+        flex-direction: column;
     }
 }

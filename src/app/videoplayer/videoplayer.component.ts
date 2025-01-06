@@ -55,6 +55,8 @@ export class VideoplayerComponent {
   currentTimeBeforeQualityChange: number = 0;
   screenWidth: number = 0;
   private intervalId: any;
+  showOverlay: boolean = false;
+  savedProgress: number = 0;
 
   constructor() {
     this.screenWidth = window.innerWidth;
@@ -88,9 +90,9 @@ export class VideoplayerComponent {
         this.saveVideoProgress();
       });
 
-      this.videoPlayer.nativeElement.addEventListener('play', () => {  
-        this.intervalId = setInterval(() => {  
-         this.saveVideoProgress();  
+      this.videoPlayer.nativeElement.addEventListener('play', () => {
+        this.intervalId = setInterval(() => {
+          this.saveVideoProgress();
         }, 5000);
       });
     }
@@ -185,21 +187,51 @@ export class VideoplayerComponent {
   * If progress data is available, it sets the video's current playback time to the saved value.
   * Otherwise, it resets the playback time to the beginning of the video.
   */
+  // getVideoProgress(): void {
+  //   this.videoService.loadVideoProgress().subscribe({
+  //     next: (data) => {
+  //       if (data && data.current_time !== undefined) {
+  //         this.savedProgress = data.current_time;
+  //         console.log('SAVED', this.savedProgress);
+  //         this.videoPlayer.nativeElement.currentTime = 0;
+  //         this.videoPlayer.nativeElement.currentTime = this.savedProgress;
+  //         console.log('Progress loaded:', this.savedProgress);
+  //       } else {
+  //         this.videoPlayer.nativeElement.currentTime = 0;
+  //       }
+  //     },
+  //     error: (err) => console.error('Error loading progress:', err),
+  //   });
+  // }
+
+
   getVideoProgress(): void {
     this.videoService.loadVideoProgress().subscribe({
       next: (data) => {
         if (data && data.current_time !== undefined) {
-          const savedProgress = data.current_time;
-          console.log('SAVED', savedProgress);
-          this.videoPlayer.nativeElement.currentTime = 0;
-          this.videoPlayer.nativeElement.currentTime = savedProgress;
-          console.log('Progress loaded:', savedProgress);
+          this.savedProgress = data.current_time;
+          this.showOverlay = true; // Zeige Overlay an
         } else {
           this.videoPlayer.nativeElement.currentTime = 0;
         }
       },
       error: (err) => console.error('Error loading progress:', err),
     });
+  }
+
+
+  resumeVideo(): void {
+    // Setze das Video auf den gespeicherten Fortschritt und verstecke das Overlay
+    this.videoPlayer.nativeElement.currentTime = this.savedProgress;
+    this.showOverlay = false;
+    this.videoPlayer.nativeElement.play();
+  }
+
+  restartVideo(): void {
+    // Starte das Video von vorne und verstecke das Overlay
+    this.videoPlayer.nativeElement.currentTime = 0;
+    this.showOverlay = false;
+    this.videoPlayer.nativeElement.play();
   }
 
 
