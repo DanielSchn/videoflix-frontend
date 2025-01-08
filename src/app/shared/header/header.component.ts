@@ -59,12 +59,6 @@ export class HeaderComponent {
     } else if (this.url.includes('video-player')) {
       this.videoPlayer = true;
     }
-
-    console.log('LOGIN', this.loginPage);
-    console.log('video', this.videoListSite);
-    console.log('signup', this.signupSite);
-    console.log('landing', this.landingSite);
-    console.log('loggedIn', this.loggedIn);
   }
 
 

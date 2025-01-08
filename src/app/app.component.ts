@@ -1,6 +1,7 @@
 import { Component, HostListener, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { VideoService } from './service/video.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ export class AppComponent {
   title = 'videoflix';
   videoService = inject(VideoService);
   router = inject(Router);
+  private subscription!: Subscription;
 
   
   constructor() {
@@ -42,7 +44,6 @@ export class AppComponent {
   */
   private updateScreenWidth(): void {
     this.videoService.screenWidth = window.innerWidth;
-    console.log('Aktuelle Bildschirmbreite:', this.videoService.screenWidth);
   }
 
 
@@ -53,11 +54,22 @@ export class AppComponent {
   private loadVideos(): void {
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     if (token) {
-      this.videoService.fetchList().subscribe(() => {
+      this.subscription = this.videoService.fetchList().subscribe(() => {
         console.log('Videos loaded!');
       });
       this.router.navigate(['/video-list']);
     }
+  }
 
+
+  /**
+  * Lifecycle hook that is called when the component is destroyed.
+  * Cleans up any allocated resources, such as unsubscribing from observables,
+  * to prevent memory leaks and ensure proper cleanup.
+  */
+  ngOnDestroy(): void {  
+    if (this.subscription) {  
+     this.subscription.unsubscribe();  
+    }  
   }
 }

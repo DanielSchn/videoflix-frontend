@@ -7,6 +7,7 @@ import { HeaderComponent } from '../shared/header/header.component';
 import { FooterComponent } from '../shared/footer/footer.component';
 import { AuthService } from '../service/auth.service';
 import { ToastService } from '../service/toast.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-forgot-password',
@@ -33,6 +34,8 @@ export class ForgotPasswordComponent {
   message: string = '';
   error: string = '';
   isEmailValid: boolean = false;
+  private subscription!: Subscription;
+
 
   constructor() { }
 
@@ -77,7 +80,7 @@ export class ForgotPasswordComponent {
       return;
     }
 
-    this.authService.forgotPassword(this.email)
+    this.subscription = this.authService.forgotPassword(this.email)
       .subscribe({
         next: (response: any) => {
           this.message = response.message;
@@ -97,4 +100,15 @@ export class ForgotPasswordComponent {
       });
   }
 
+
+  /**
+  * Lifecycle hook that is called when the component is destroyed.
+  * Cleans up any allocated resources, such as unsubscribing from observables,
+  * to prevent memory leaks and ensure proper cleanup.
+  */
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
 }

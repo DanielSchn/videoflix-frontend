@@ -4,6 +4,7 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthService } from '../service/auth.service';
 import { ToastService } from '../service/toast.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-email-verification',
@@ -27,6 +28,7 @@ export class EmailVerificationComponent {
   verificationStatus: 'loading' | 'success' | 'error' = 'loading';
   errorMessage: string = '';
   message: string = '';
+  private subscription!: Subscription;
 
   constructor() { }
 
@@ -60,7 +62,7 @@ export class EmailVerificationComponent {
       return;
     }
 
-    this.authService.verifyEmail(uid, token)
+    this.subscription = this.authService.verifyEmail(uid, token)
       .subscribe({
         next: (response: any) => {
           this.verificationStatus = 'success';
@@ -80,5 +82,17 @@ export class EmailVerificationComponent {
           }, 3000);
         }
       });
+  }
+
+
+  /**
+  * Lifecycle hook that is called when the component is destroyed.
+  * Cleans up any allocated resources, such as unsubscribing from observables,
+  * to prevent memory leaks and ensure proper cleanup.
+  */
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }

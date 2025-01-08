@@ -8,6 +8,7 @@ import { FooterComponent } from '../shared/footer/footer.component';
 import { VideoService } from '../service/video.service';
 import { AuthService } from '../service/auth.service';
 import { ToastService } from '../service/toast.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -37,6 +38,7 @@ export class LoginComponent {
   message: string = '';
   error: string = '';
   rememberMe: boolean = false;
+  private subscription!: Subscription;
 
   constructor() { }
 
@@ -103,7 +105,7 @@ export class LoginComponent {
   * @returns void
   */
   private loadVideos(): void {
-    this.videoService.fetchList().subscribe(() => {
+    this.subscription = this.videoService.fetchList().subscribe(() => {
       console.log('Videos loaded!');
     });
   }
@@ -120,5 +122,16 @@ export class LoginComponent {
   */
   togglePasswordVisibility(): void {
     this.passwordVisible = !this.passwordVisible;
+  }
+
+  /**
+  * Lifecycle hook that is called when the component is destroyed.
+  * Cleans up any allocated resources, such as unsubscribing from observables,
+  * to prevent memory leaks and ensure proper cleanup.
+  */
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }

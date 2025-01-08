@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { environment } from '../../environments/environments';
 import { HeaderComponent } from '../shared/header/header.component';
 import { ToastService } from '../service/toast.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -53,7 +54,8 @@ export class VideoplayerComponent {
   selectedQuality: string = '720p';
   videoSrc: string = '';
   currentTimeBeforeQualityChange: number = 0;
-  // screenWidth: number = 0;
+  private subscription!: Subscription;
+  private subscriptionSave!: Subscription;
   private intervalId: any;
   showOverlay: boolean = false;
   savedProgress: number = 0;
@@ -175,8 +177,7 @@ export class VideoplayerComponent {
   */
   saveVideoProgress(): void {
     const currentTime = this.videoPlayer.nativeElement.currentTime;
-    this.videoService.setVideoProgress(currentTime).subscribe({
-      next: () => console.log('Progress saved.'),
+    this.subscriptionSave = this.videoService.setVideoProgress(currentTime).subscribe({
       error: (err) => console.error('Error saving progress:', err),
     });
   }
@@ -188,7 +189,7 @@ export class VideoplayerComponent {
   * Otherwise, it resets the playback time to the beginning of the video.
   */
   getVideoProgress(): void {
-    this.videoService.loadVideoProgress().subscribe({
+    this.subscription = this.videoService.loadVideoProgress().subscribe({
       next: (data) => {
         if (data && data.current_time !== undefined && data.current_time > 0) {
           this.savedProgress = data.current_time;
@@ -253,6 +254,10 @@ export class VideoplayerComponent {
   * Cleans up the video player instance by disposing of it to release resources.
   */
   ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+      this.subscriptionSave.unsubscribe();
+    }
     if (this.player) {
       this.player.dispose();
     }

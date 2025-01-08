@@ -140,13 +140,6 @@ export class VideoService {
     return this.http
       .get<any[]>(`${this.apiBaseUrl}api/video-progress/get_user_progress/`, { headers, params })
       .pipe(
-        tap((data) => {
-          if (data && data.length > 0) {
-            console.log('Loaded video progress', data[0]);
-          } else {
-            console.log('No video progress found.');
-          }
-        }),
         catchError((error) => {
           if (error.status === 404) {
             console.log('No video progress found.');

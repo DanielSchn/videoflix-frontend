@@ -7,6 +7,7 @@ import { HeaderComponent } from '../shared/header/header.component';
 import { FooterComponent } from '../shared/footer/footer.component';
 import { AuthService } from '../service/auth.service';
 import { ToastService } from '../service/toast.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -42,6 +43,8 @@ export class PasswordResetComponent {
 
   private uid: string | null = null;
   private token: string | null = null;
+  private subscription!: Subscription;
+
 
   constructor() { }
 
@@ -119,7 +122,7 @@ export class PasswordResetComponent {
       return;
     }
 
-    this.authService.passwordReset(this.uid, this.token, this.newPassword)
+    this.subscription = this.authService.passwordReset(this.uid, this.token, this.newPassword)
       .subscribe({
         next: (response: any) => {
           this.message = response.message;
@@ -153,4 +156,15 @@ export class PasswordResetComponent {
     this.passwordVisible = !this.passwordVisible;
   }
 
+
+  /**
+  * Lifecycle hook that is called when the component is destroyed.
+  * Cleans up any allocated resources, such as unsubscribing from observables,
+  * to prevent memory leaks and ensure proper cleanup.
+  */
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
 }

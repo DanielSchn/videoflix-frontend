@@ -7,6 +7,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FooterComponent } from '../shared/footer/footer.component';
 import { AuthService } from '../service/auth.service';
 import { ToastService } from '../service/toast.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-signup',
@@ -39,6 +40,8 @@ export class SignupComponent {
   message: string = '';
   error: string = '';
   checkboxChecked: boolean = false;
+  private subscription!: Subscription;
+
 
 
 
@@ -116,7 +119,7 @@ export class SignupComponent {
       return;
     }
 
-    this.authService.signUp(this.email, this.password, this.confirmPassword)
+    this.subscription = this.authService.signUp(this.email, this.password, this.confirmPassword)
       .subscribe({
         next: (response: any) => {
           this.message = response.message;
@@ -134,5 +137,17 @@ export class SignupComponent {
           }, 3500);
         }
       });
+  }
+
+
+  /**
+  * Lifecycle hook that is called when the component is destroyed.
+  * Cleans up any allocated resources, such as unsubscribing from observables,
+  * to prevent memory leaks and ensure proper cleanup.
+  */
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }

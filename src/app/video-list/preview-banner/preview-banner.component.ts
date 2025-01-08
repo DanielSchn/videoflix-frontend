@@ -7,6 +7,7 @@ import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
 import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 import { Videolist } from '../../interfaces/videolist.interface';
 import { environment } from '../../../environments/environments';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-preview-banner',
@@ -28,8 +29,10 @@ export class PreviewBannerComponent {
 
   list: Videolist[] = [];
   randomNumber: number = Math.floor(Math.random() * 7) + 1;
+  private subscription!: Subscription;
 
-  constructor() {}
+
+  constructor() { }
 
 
   /**
@@ -38,11 +41,20 @@ export class PreviewBannerComponent {
   * Logs the list to the console after a delay of 3 seconds (for debugging purposes).
   */
   ngOnInit(): void {
-    this.videoService.getList().subscribe((data) => {
+    this.subscription = this.videoService.getList().subscribe((data) => {
       this.list = data;
     });
-    setTimeout(() => {
-      console.log(this.list);
-    }, 3000);
+  }
+
+
+  /**
+  * Lifecycle hook that is called when the component is destroyed.
+  * Cleans up any allocated resources, such as unsubscribing from observables,
+  * to prevent memory leaks and ensure proper cleanup.
+  */
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }
