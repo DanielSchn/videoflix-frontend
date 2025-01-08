@@ -80,7 +80,7 @@ export class LoginComponent {
           this.toastr.success(this.message);
         },
         error: (error) => {
-          this.error = error.error?.error || 'Error during login. Check login data and try again.';
+          this.error = error.error?.detail || 'Error during login. Check login data and try again.';
           this.message = '';
           this.toastr.error(this.error);
         },
